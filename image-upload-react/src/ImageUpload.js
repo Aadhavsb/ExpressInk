@@ -16,11 +16,13 @@ const ImageUpload = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('image', image);
-
+  
     try {
       const response = await axios.post('http://localhost:8000/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+      
+      // Use the full URL for the image
       setImageUrl(`http://localhost:8000${response.data.imagePath}`);
     } catch (err) {
       console.error('Error uploading image:', err);
@@ -38,7 +40,7 @@ const ImageUpload = () => {
       {imageUrl && (
         <div>
           <h3>Uploaded Image:</h3>
-          <img src={imageUrl} alt="Uploaded" />
+          <img src={imageUrl} alt="Uploaded" style={{maxWidth: '300px'}} /> 
         </div>
       )}
     </div>
