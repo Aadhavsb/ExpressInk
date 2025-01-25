@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageUpload from "../components/ImageUpload";
+import ImageAnalysis from "../components/ImageAnalysis";
 import "../App.css";
 
 const Home = () => {
+  const [aiResponse, setAiResponse] = useState(null);
+
   const handleFileUpload = (file) => {
     console.log("File uploaded:", file);
+    setAiResponse(file.aiResponse); // Assumes aiResponse is part of the response data
   };
 
   return (
@@ -30,6 +34,7 @@ const Home = () => {
       <div>
         <h1>Upload your child's drawing here</h1>
         <ImageUpload onFileUpload={handleFileUpload} />
+        <ImageAnalysis aiResponse={aiResponse} />
       </div>
     </div>
   );
