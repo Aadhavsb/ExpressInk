@@ -7,6 +7,7 @@ const ImageUpload = ({ onFileUpload }) => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isAnalysisComplete, setIsAnalysisComplete] = useState(false);
   const [progress, setProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
 
@@ -39,6 +40,7 @@ const ImageUpload = ({ onFileUpload }) => {
     const imageUrl = URL.createObjectURL(file); // Local preview
     setUploadedImage(imageUrl);
     setIsImageUploaded(true);
+    setIsAnalysisComplete(false); // Reset analysis state
 
     const formData = new FormData();
     formData.append("image", file);
@@ -65,6 +67,8 @@ const ImageUpload = ({ onFileUpload }) => {
 
   const handleAnalyze = async () => {
     setIsAnalyzing(true);
+    setIsAnalysisComplete(false);
+    setProgress(0);
 
     // Simulate progress
     let fakeProgress = 0;
@@ -74,38 +78,69 @@ const ImageUpload = ({ onFileUpload }) => {
       if (fakeProgress >= 100) {
         clearInterval(progressInterval);
         setTimeout(() => {
-          setIsAnalyzing(false); // Stop analyzing after progress completes
+          setIsAnalyzing(false);
+          setIsAnalysisComplete(true);
         }, 500);
       }
     }, 200);
   };
 
+  const handleUploadNewImage = () => {
+    setUploadedImage(null);
+    setIsImageUploaded(false);
+    setIsAnalysisComplete(false);
+    setProgress(0);
+    setImageUrl("");
+  };
+
   return (
     <div className="image-upload-container">
-      {!isImageUploaded ? (
-        <div
-          className={`upload-box ${isDragging ? "dragging" : ""}`}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-          onClick={() => document.getElementById("fileInput").click()}
-        >
-          <p>Drag and drop an image here, or click to upload</p>
-          <input
-            id="fileInput"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="hidden-input"
-          />
-        </div>
-      ) : (
-        <div className="uploaded-image-preview">
-          <img src={uploadedImage || imageUrl} alt="Uploaded" />
+      <div
+        className={`upload-box ${isDragging ? "dragging" : ""} ${
+          isImageUploaded ? "with-image" : ""
+        }`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        onClick={
+          !isImageUploaded
+            ? () => document.getElementById("fileInput").click()
+            : null
+        }
+      >
+        {!isImageUploaded ? (
+          <>
+            <p>Drag and drop an image here, or click to upload</p>
+            <input
+              id="fileInput"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden-input"
+            />
+          </>
+        ) : (
+          <div className="uploaded-image-preview">
+            <div className="image-preview-container">
+              <img src={uploadedImage || imageUrl} alt="Uploaded" />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {isImageUploaded && (
+        <div className="controls">
           {isAnalyzing ? (
             <div className="progress-bar-container">
               <div className="progress-bar" style={{ width: `${progress}%` }} />
             </div>
+          ) : isAnalysisComplete ? (
+            <button
+              className="upload-new-image-button"
+              onClick={handleUploadNewImage}
+            >
+              Upload New Image
+            </button>
           ) : (
             <button className="analyze-button" onClick={handleAnalyze}>
               Analyze

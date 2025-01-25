@@ -3,21 +3,24 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 400px;
   width: 100%;
 }
 
 .upload-box {
-  border: 2px solid #ccc;
+  border: 2px dashed #ccc;
   border-radius: 8px;
   width: 800px;
   height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   background-color: #f9f9f9;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .upload-box.dragging {
@@ -28,19 +31,36 @@
   display: none;
 }
 
+.upload-box p {
+  margin: 0;
+  font-size: 18px;
+  color: #666;
+}
+
 .uploaded-image-preview {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
-.uploaded-image-preview img {
-  max-width: 800px;
-  border-radius: 8px;
-  margin-bottom: 16px;
+.image-preview-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-.analyze-button {
+.image-preview-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Make the image fill the container */
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+.analyze-button,
+.upload-new-image-button {
   background-color: #0c96e4;
   color: white;
   border: none;
@@ -49,20 +69,21 @@
   cursor: pointer;
   font-size: 24px;
   font-weight: 600;
+  width: 200px;
+  text-align: center;
 }
 
-.analyze-button:hover {
-  background-color: #0c96e4;
+.analyze-button:hover,
+.upload-new-image-button:hover {
+  background-color: #0a7ec1;
 }
 
 .progress-bar-container {
-  width: 100%;
-  max-width: 800px;
+  width: 800px;
   height: 20px;
   background-color: #e0e0e0;
   border-radius: 10px;
   overflow: hidden;
-  margin-top: 16px;
 }
 
 .progress-bar {
