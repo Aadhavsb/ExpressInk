@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./ImageUpload.css";
 
-const ImageUpload = ({ onFileUpload }) => {
+const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
@@ -86,11 +86,17 @@ const ImageUpload = ({ onFileUpload }) => {
   };
 
   const handleUploadNewImage = () => {
+    // Reset local state related to the uploaded image and analysis
     setUploadedImage(null);
     setIsImageUploaded(false);
     setIsAnalysisComplete(false);
     setProgress(0);
     setImageUrl("");
+
+    // Notify the parent component (Home.js) to reset aiResponse
+    if (onUploadNewImage) {
+      onUploadNewImage();
+    }
   };
 
   return (

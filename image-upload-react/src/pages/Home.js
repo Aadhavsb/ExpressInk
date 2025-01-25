@@ -11,6 +11,11 @@ const Home = () => {
     setAiResponse(file.aiResponse); // Assumes aiResponse is part of the response data
   };
 
+  // New function to handle "Upload New Image" action
+  const handleUploadNewImage = () => {
+    setAiResponse(null); // Reset the aiResponse state
+  };
+
   return (
     <div className="app-container">
       <header className="header">
@@ -22,7 +27,11 @@ const Home = () => {
 
       <div>
         <h1>Upload your child's drawing here</h1>
-        <ImageUpload onFileUpload={handleFileUpload} />
+        {/* Pass the new prop to ImageUpload */}
+        <ImageUpload
+          onFileUpload={handleFileUpload}
+          onUploadNewImage={handleUploadNewImage}
+        />
         <ImageAnalysis aiResponse={aiResponse} />
       </div>
     </div>
