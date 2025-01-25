@@ -22,15 +22,6 @@ export default function App() {
         </p>
       </section>
 
-      <section className="how-to-section">
-        <h2 className="section-title">How to Use</h2>
-        <ol className="instructions">
-          <li>Upload your image using the button below.</li>
-          <li>Our AI analyzes the photo to detect emotions.</li>
-          <li>Receive detailed insights and mood summaries.</li>
-        </ol>
-      </section>
-
       <ImageUpload />
     </div>
   );
