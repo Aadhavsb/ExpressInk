@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./ImageUpload.css";
 import axios from "axios";
+import "./ImageUpload.css";
 
 const ImageUpload = ({ onFileUpload }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -8,6 +8,7 @@ const ImageUpload = ({ onFileUpload }) => {
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -34,12 +35,31 @@ const ImageUpload = ({ onFileUpload }) => {
     }
   };
 
-  const uploadImage = (file) => {
+  const uploadImage = async (file) => {
     const imageUrl = URL.createObjectURL(file); // Local preview
     setUploadedImage(imageUrl);
     setIsImageUploaded(true);
-    if (onFileUpload) {
-      onFileUpload(file);
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/upload",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      // Use the full URL for the image
+      setImageUrl(`http://localhost:8000${response.data.imagePath}`);
+
+      if (onFileUpload) {
+        onFileUpload(response.data);
+      }
+    } catch (err) {
+      console.error("Error uploading image:", err);
     }
   };
 
@@ -81,7 +101,7 @@ const ImageUpload = ({ onFileUpload }) => {
         </div>
       ) : (
         <div className="uploaded-image-preview">
-          <img src={uploadedImage} alt="Uploaded" />
+          <img src={uploadedImage || imageUrl} alt="Uploaded" />
           {isAnalyzing ? (
             <div className="progress-bar-container">
               <div className="progress-bar" style={{ width: `${progress}%` }} />
