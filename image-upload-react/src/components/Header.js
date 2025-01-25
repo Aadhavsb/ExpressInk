@@ -5,15 +5,17 @@ const Header = () => {
   return (
     <nav className="nav">
       <div className="nav-logo">
-        <img
-          src="/expressink-logo.png"
-          alt="ExpressInk Logo"
-          className="logo-image"
-        />
+        <a href="/">
+          <img
+            src="/expressink-logo.png"
+            alt="ExpressInk Logo"
+            className="logo-image"
+          />
+        </a>
       </div>
       <ul className="nav-links">
         <li>
-          <a href="#" className="nav-item">
+          <a href="/" className="nav-item">
             Home
           </a>
         </li>
