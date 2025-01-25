@@ -52,7 +52,7 @@
 .image-preview-container img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Make the image fill the container */
+  object-fit: contain; /* Make the image fill the container */
 }
 
 .controls {

@@ -24,10 +24,10 @@ const About = () => {
           As part of HackCWRU 2025, we built a webapp based on Node.js and React.
         </p>
         <ul className="team-list">
-          <li><strong>Aadhab Bharadwaj</strong> - Backend</li>
-          <li><strong>Sunveer Chugh</strong> - Backend</li>
-          <li><strong>Jason Li</strong> - Frontend</li>
-          <li><strong>Dakin Muhlner</strong> - Frontend</li>
+          <li><strong>Aadhab Bharadwaj</strong> - Full Stack</li>
+          <li><strong>Sunveer Chugh</strong> - Full Stack</li>
+          <li><strong>Jason Li</strong> - Full Stack</li>
+          <li><strong>Dakin Muhlner</strong> - Full Stack</li>
         </ul>
       </section>
 
