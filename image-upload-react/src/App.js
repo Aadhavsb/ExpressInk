@@ -1,28 +1,26 @@
 import React from "react";
-import ImageUpload from './ImageUpload';
-import "./App.css";
+import Header from "./components/Header";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
-export default function App() {
+/*
+import About from "./pages/about";
+import SignUp from "./pages/signup";
+import Contact from "./pages/contact";
+*/
+
+function App() {
   return (
-    <div className="app-container">
-      <header className="header">
-        <h1 className="title">Welcome to ExpressInk</h1>
-        <p className="subtitle">
-          Discover the emotions behind your images with our intuitive tool.
-        </p>
-      </header>
-
-      <section className="about-section">
-        <h2 className="section-title">About ExpressInk</h2>
-        <p className="section-content">
-          ExpressInk uses advanced AI technology to analyze the emotional content of
-          your photos, offering insights into the mood and atmosphere captured in
-          each image. Whether for personal reflection or professional use, ExpressInk
-          provides a unique perspective on your visual content.
-        </p>
-      </section>
-
-      <ImageUpload />
-    </div>
+    <Router>
+      <Header />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        {/* <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/sign-up" element={<SignUp />} /> */}
+      </Routes>
+    </Router>
   );
 }
+
+export default App;

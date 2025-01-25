@@ -1,73 +1,45 @@
 .app-container {
   text-align: center;
-  padding: 20px;
-  background-color: #f9f9f9;
+  padding: 0;
+  background-color: #F4F4F4; /* Background Color */
   min-height: 100vh;
 }
 
 .header {
   margin-bottom: 40px;
+  padding: 60px 20px 20px 20px;
 }
 
 .title {
   font-size: 36px;
   font-weight: bold;
-  color: #333;
+  color: #333333; /* Text Color */
   margin-bottom: 10px;
 }
 
 .subtitle {
   font-size: 18px;
-  color: #666;
+  color: #666666;
 }
 
-.about-section,
-.how-to-section {
-  background: white;
+.about-section {
+  background: #FFFFFF;
   border-radius: 8px;
   padding: 20px;
   margin: 20px auto;
-  max-width: 600px;
+  max-width: 800px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .section-title {
   font-size: 24px;
   font-weight: bold;
-  color: #444;
+  color: #5587a9;
   margin-bottom: 10px;
 }
 
 .section-content {
   font-size: 16px;
   line-height: 1.5;
-  color: #555;
-}
-
-.instructions {
-  text-align: left;
-  padding-left: 20px;
-  font-size: 16px;
-  color: #555;
-}
-
-.instructions li {
-  margin-bottom: 10px;
-}
-
-.upload-button {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.upload-button:hover {
-  background-color: #0056b3;
+  color: #555555;
 }
