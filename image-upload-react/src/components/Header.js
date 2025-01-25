@@ -1,44 +1,115 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const username = localStorage.getItem("username");
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const dropdownRef = useRef(null);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("username");
+    navigate("/");
+    setDropdownOpen(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <nav className="nav">
       <div className="nav-logo">
-        <a href="/">
+        <Link to="/">
           <img
             src="/expressink-logo.png"
             alt="ExpressInk Logo"
             className="logo-image"
           />
-        </a>
+        </Link>
       </div>
       <ul className="nav-links">
         <li>
-          <a href="/" className="nav-item">
+          <Link to="/" className="nav-item">
             Home
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/About" className="nav-item">
+          <Link to="/About" className="nav-item">
             About
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/Results" className="nav-item">
+          <Link to="/Results" className="nav-item">
             Results
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="/Events" className="nav-item">
+          <Link to="/Events" className="nav-item">
             Events
-          </a>
+          </Link>
         </li>
-        <li>
-          <a href="/Login" className="nav-item">
-            Login/Signup
-          </a>
-        </li>
+        {!isAuthenticated ? (
+          <li>
+            <Link to="/login" className="nav-item">
+              Login
+            </Link>
+          </li>
+        ) : (
+          <li className="nav-item username-dropdown" ref={dropdownRef}>
+            <span onClick={toggleDropdown} className="username">
+              {username}
+            </span>
+            {dropdownOpen && (
+              <ul className="dropdown-menu">
+                <li>
+                  <Link
+                    to="/profile"
+                    className="dropdown-item"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/settings"
+                    className="dropdown-item"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Settings
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="dropdown-item logout-button"
+                  >
+                    Log Out
+                  </button>
+                </li>
+              </ul>
+            )}
+          </li>
+        )}
       </ul>
     </nav>
   );

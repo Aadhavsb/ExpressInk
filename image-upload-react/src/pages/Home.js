@@ -8,7 +8,7 @@ const Home = () => {
 
   const handleFileUpload = (file) => {
     console.log("File uploaded:", file);
-    setAiResponse(file.aiResponse); // Assumes aiResponse is part of the response data
+    setAiResponse(file.aiResponse);
   };
 
   const handleUploadNewImage = () => {
@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <div className="app-container">
-      <header className="header">
+      <header className="heading">
         <h1 className="title">Welcome to ExpressInk</h1>
         <p className="subtitle">
           Discover the emotions behind your images with our intuitive tool.
