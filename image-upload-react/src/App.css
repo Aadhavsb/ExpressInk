@@ -1,19 +1,19 @@
 .app-container {
   text-align: center;
-  padding: 0;
-  background-color: #F4F4F4; /* Background Color */
+  padding: 0 0 300px 0;
+  background-color: #f4f4f4;
   min-height: 100vh;
 }
 
 .header {
   margin-bottom: 40px;
-  padding: 60px 20px 20px 20px;
+  padding: 120px 40px 40px 40px;
 }
 
 .title {
   font-size: 36px;
   font-weight: bold;
-  color: #333333; /* Text Color */
+  color: #333333;
   margin-bottom: 10px;
 }
 
@@ -23,10 +23,11 @@
 }
 
 .about-section {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 8px;
   padding: 20px;
   margin: 20px auto;
+  margin-bottom: 40px;
   max-width: 800px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -34,7 +35,7 @@
 .section-title {
   font-size: 24px;
   font-weight: bold;
-  color: #5587a9;
+  color: #0c96e4;
   margin-bottom: 10px;
 }
 

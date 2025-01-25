@@ -1,50 +1,96 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./ImageUpload.css";
+import axios from "axios";
 
-//image upload component
-const ImageUpload = () => {
-  //states hold image, imageUrl
-  const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
+const ImageUpload = ({ onFileUpload }) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [progress, setProgress] = useState(0);
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
   };
 
-  //image submission
-  const handleSubmit = async (e) => {
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("image", image);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/upload",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-
-      setImageUrl(`http://localhost:8000${response.data.imagePath}`);
-    } catch (err) {
-      console.error("Error uploading image:", err);
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      uploadImage(file);
     }
   };
 
-  //render upload form
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      uploadImage(file);
+    }
+  };
+
+  const uploadImage = (file) => {
+    const imageUrl = URL.createObjectURL(file); // Local preview
+    setUploadedImage(imageUrl);
+    setIsImageUploaded(true);
+    if (onFileUpload) {
+      onFileUpload(file);
+    }
+  };
+
+  const handleAnalyze = async () => {
+    setIsAnalyzing(true);
+
+    // Simulate progress
+    let fakeProgress = 0;
+    const progressInterval = setInterval(() => {
+      fakeProgress += 10;
+      setProgress(fakeProgress);
+      if (fakeProgress >= 100) {
+        clearInterval(progressInterval);
+        setTimeout(() => {
+          setIsAnalyzing(false); // Stop analyzing after progress completes
+        }, 500);
+      }
+    }, 200);
+  };
+
   return (
-    <div>
-      <h2>Upload Drawing</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleImageChange} />
-        <button type="submit">Upload</button>
-      </form>
-      {imageUrl && (
-        <div>
-          <h3>Uploaded Image:</h3>
-          <img src={imageUrl} alt="Uploaded" style={{ maxWidth: "300px" }} />
+    <div className="image-upload-container">
+      {!isImageUploaded ? (
+        <div
+          className={`upload-box ${isDragging ? "dragging" : ""}`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          onClick={() => document.getElementById("fileInput").click()}
+        >
+          <p>Drag and drop an image here, or click to upload</p>
+          <input
+            id="fileInput"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="hidden-input"
+          />
+        </div>
+      ) : (
+        <div className="uploaded-image-preview">
+          <img src={uploadedImage} alt="Uploaded" />
+          {isAnalyzing ? (
+            <div className="progress-bar-container">
+              <div className="progress-bar" style={{ width: `${progress}%` }} />
+            </div>
+          ) : (
+            <button className="analyze-button" onClick={handleAnalyze}>
+              Analyze
+            </button>
+          )}
         </div>
       )}
     </div>

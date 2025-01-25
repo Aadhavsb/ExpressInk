@@ -1,12 +1,14 @@
 import React from "react";
 import ImageUpload from "../components/ImageUpload";
-import Header from "../components/Header";
 import "../App.css";
 
 const Home = () => {
+  const handleFileUpload = (file) => {
+    console.log("File uploaded:", file);
+  };
+
   return (
     <div className="app-container">
-      <Header />
       <header className="header">
         <h1 className="title">Welcome to ExpressInk</h1>
         <p className="subtitle">
@@ -25,7 +27,10 @@ const Home = () => {
         </p>
       </section>
 
-      <ImageUpload />
+      <div>
+        <h1>Upload your child's drawing here</h1>
+        <ImageUpload onFileUpload={handleFileUpload} />
+      </div>
     </div>
   );
 };
