@@ -31,7 +31,8 @@
 }
 
 .nav-item {
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: 620;
   color: #ffffff;
   text-decoration: none;
 }
