@@ -1,5 +1,8 @@
 import React from "react";
+import TeamCard from "./Team/TeamCard";
+import teamData from "./Team/TeamData";
 import "../App.css";
+import "./Team/TeamGrid.css"
 
 const About = () => {
   return (
@@ -14,11 +17,11 @@ const About = () => {
       <section className="about-section">
         <h2 className="section-title">About ExpressInk</h2>
         <p className="section-content">
-        ExpressInk uses advanced AI technology to analyze the emotional content of your photos, offering insights into the mood and atmosphere captured in each image. Whether for personal reflection or professional use, ExpressInk provides a unique perspective on your visual content.
+        ExpressInk uses advanced AI technology to analyze the emotional content of your child's drawings, offering insights into your child's mood and mental health. Our sentiment analysis tool can help you understand your child's emotional state and provide guidance on how to support them. ExpressInk is a powerful tool for parents, teachers, and mental health professionals who want to better understand children's emotions and help them thrive. ExpressInk is a project developed by a team of students at Case Western Reserve University as part of HackCWRU 2025. We are passionate about using technology to improve mental health and well-being, and we are excited to share our work with you.
         </p>
       </section>
 
-      <section className="about-section">
+      {/* <section className="about-section">
         <h2 className="section-title">Our Team</h2>
         <p className="section-content">
           As part of HackCWRU 2025, we built a webapp based on Node.js and React.
@@ -29,7 +32,17 @@ const About = () => {
           <li><strong>Jason Li</strong> - Full Stack</li>
           <li><strong>Dakin Muhlner</strong> - Full Stack</li>
         </ul>
-      </section>
+      </section> */}
+      <div className="team-grid">
+      {teamData.map((member) => (
+        <TeamCard
+          key={member.id}
+          image={member.image}
+          name={member.name}
+          bio={member.bio}
+        />
+      ))}
+    </div>
 
       <section className="about-section">
         <h2 className="section-title">Contact Info</h2>

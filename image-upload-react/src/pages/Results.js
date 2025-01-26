@@ -1,56 +1,65 @@
 import React, { useEffect, useState } from 'react';
 
+
+import { Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+import "./Results.css"
+
+ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Title, Tooltip, Legend);
+
+
+
 const Results = () => {
-  // State to store the data from the JSON file
-  const [data, setData] = useState([]);
-  // State to handle any errors
-  const [error, setError] = useState(null);
+  const [chartData, setChartData] = useState(null);
 
-  // Fetch the JSON file on component mount
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch the JSON file from the public folder
-        const response = await fetch('/data.json');
-        
-        // Check if response is okay
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        
-        // Parse the JSON response
-        const jsonData = await response.json();
-        
-        // Set the data in the state
-        setData(jsonData);
-      } catch (err) {
-        // Handle errors
-        setError(err.message);
-      }
-    };
+    // Fetch data from JSON file
+    fetch("/data.json")
+      .then((response) => response.json())
+      .then((data) => {
+        // Process data for chart
+        const labels = data.map((item) => item.timestamp);
+        const values = data.map((item) => item.sentiment_rating);
 
-    // Call the function to fetch data
-    fetchData();
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
-
-  // Render the data
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+        setChartData({
+          labels,
+          datasets: [
+            {
+              label: "Sentiment Trend",
+              data: values,
+              borderColor: "rgba(75, 192, 192, 1)",
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              tension: 0.4, // Smooth curve
+              fill: true,
+            },
+          ],
+        });
+      });
+  }, []);
 
   return (
-    <div>
-      <h2>Results:</h2>
-      {data.length === 0 ? (
-        <p>Loading...</p>
+    <div style={{ width: "600px", margin: "auto" }}>
+      {chartData ? (
+        <Line
+          data={chartData}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "Trend Over Time" },
+            },
+          }}
+        />
       ) : (
-        <ul>
-          {data.map((item) => (
-            <li key={item.sentiment_rating}>
-              <h3>{item.reasoning_text}</h3>
-            </li>
-          ))}
-        </ul>
+        <p>Loading chart...</p>
       )}
     </div>
   );
