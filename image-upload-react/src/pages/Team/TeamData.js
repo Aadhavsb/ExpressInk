@@ -20,7 +20,7 @@ const teamData = [
     {
         id: 4,
         name: "Veer Chugh",
-        bio: "Full stack developer with mastery of frontend development and backend database management",
+        bio: "Full stack developer, combining",
         image:  "/images/veer.PNG",
       },
   ];
