@@ -6,7 +6,7 @@ import "./Team/TeamGrid.css";
 
 const About = () => {
   return (
-    <div className="app-container">
+    <div className="app-container-about">
       <header className="header">
         <h1 className="title">About ExpressInk</h1>
         <p className="subtitle">
