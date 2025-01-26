@@ -37,6 +37,7 @@ const Header = () => {
 
   return (
     <nav className="nav">
+      {/* Logo on the left */}
       <div className="nav-logo">
         <Link to="/">
           <img
@@ -46,6 +47,8 @@ const Header = () => {
           />
         </Link>
       </div>
+
+      {/* Navigation links in the center */}
       <ul className="nav-links">
         <li>
           <Link to="/" className="nav-item">
@@ -67,14 +70,16 @@ const Header = () => {
             Events
           </Link>
         </li>
+      </ul>
+
+      {/* Login/Auth section on the right */}
+      <div className="nav-auth">
         {!isAuthenticated ? (
-          <li>
-            <Link to="/login" className="nav-item">
-              Login
-            </Link>
-          </li>
+          <Link to="/login" className="nav-item">
+            Login
+          </Link>
         ) : (
-          <li className="nav-item username-dropdown" ref={dropdownRef}>
+          <div className="username-dropdown" ref={dropdownRef}>
             <span onClick={toggleDropdown} className="username">
               {username}
             </span>
@@ -108,9 +113,9 @@ const Header = () => {
                 </li>
               </ul>
             )}
-          </li>
+          </div>
         )}
-      </ul>
+      </div>
     </nav>
   );
 };
