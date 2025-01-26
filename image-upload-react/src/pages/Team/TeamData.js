@@ -14,13 +14,13 @@ const teamData = [
     {
       id: 3,
       name: "Jason Li",
-      bio: "Full stack developer with mastery of frontend development and ui/ux design.",
+      bio: "Full stack developer with front end development and UI/UX design.",
       image:  "/images/jason.jpg",
     },
     {
         id: 4,
         name: "Veer Chugh",
-        bio: "Full stack developer, combining",
+        bio: "Full stack developer, connecting front end and back end.",
         image:  "/images/veer.PNG",
       },
   ];
