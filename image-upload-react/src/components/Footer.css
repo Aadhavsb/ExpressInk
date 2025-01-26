@@ -68,3 +68,10 @@
     padding: 0;
   }
 }
+
+a {
+  color: #007BFF; /* Change this to the desired color */
+}
+a:hover {
+  color: #FF5733; /* Change this to the color when hovered */
+}
