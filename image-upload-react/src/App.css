@@ -1,3 +1,10 @@
+.body {
+  margin: 0;
+  padding-top: 0;
+  height: 100%;
+}
+
+
 .app-container {
   text-align: center;
   padding: 0 0 0 0;
@@ -8,7 +15,7 @@
 
 .heading {
   margin-bottom: 40px;
-  padding: 60px 40px 40px 40px;
+  padding: 10px 40px 10px 40px;
 }
 
 .title {
@@ -93,3 +100,29 @@
     padding: 0;
   }
 }
+
+.prompt-text {
+  transition: opacity 0.25s ease-in-out;
+  opacity: 1;
+}
+
+.prompt-text.fade-out {
+  opacity: 0;
+}
+
+.prompt{
+  background-color: white;
+  cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.upload-line{
+  padding-top: 40px;
+}
+
