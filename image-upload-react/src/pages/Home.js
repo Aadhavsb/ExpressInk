@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ImageUpload from "../components/ImageUpload";
 import ImageAnalysis from "../components/ImageAnalysis";
-import "../App.css";
+import DrawingCanvas from "../components/DrawingCanvas";
 import Footer from "../components/Footer";
+import "../App.css";
 
 const Home = () => {
   const [aiResponse, setAiResponse] = useState(null);
   const [SuggestedPrompt, setSuggestedPrompt] = useState("");
+  const [showDrawing, setShowDrawing] = useState(false);
 
   const handleFileUpload = (file) => {
     console.log("File uploaded:", file);
@@ -45,6 +47,48 @@ const Home = () => {
     getRandomPrompt();
   }, []);
 
+  const handleDrawingSave = (dataUrl) => {
+    const file = dataURLtoFile(dataUrl, "drawing.png");
+
+    uploadImage(file);
+  };
+
+  const dataURLtoFile = (dataurl, filename) => {
+    const arr = dataurl.split(",");
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : "";
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const response = await fetch("http://localhost:8000/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const responseData = await response.json();
+      if (responseData.aiResponse) {
+        setAiResponse(responseData.aiResponse);
+      } else {
+        console.error("No aiResponse in the response:", responseData);
+      }
+    } catch (error) {
+      console.error("Error uploading drawing:", error);
+    }
+  };
+
   return (
     <div className="app-container">
       <header className="heading">
@@ -62,11 +106,39 @@ const Home = () => {
       </div>
 
       <div>
-        <h1 className="upload-line">Upload Drawing Below</h1>
-        <ImageUpload
-          onFileUpload={handleFileUpload}
-          onUploadNewImage={handleUploadNewImage}
-        />
+        <h1 className="upload-line">Upload Image or Draw Here</h1>
+
+        {!showDrawing ? (
+          <div>
+            <ImageUpload
+              onFileUpload={handleFileUpload}
+              onUploadNewImage={handleUploadNewImage}
+            />
+            <p>
+              Want to draw live?{" "}
+              <button
+                onClick={() => setShowDrawing(true)}
+                className="toggle-button"
+              >
+                Switch to Drawing Mode
+              </button>
+            </p>
+          </div>
+        ) : (
+          <div>
+            <DrawingCanvas onSave={handleDrawingSave} />
+            <p>
+              Want to upload an image instead?{" "}
+              <button
+                onClick={() => setShowDrawing(false)}
+                className="toggle-button"
+              >
+                Switch to Image Upload
+              </button>
+            </p>
+          </div>
+        )}
+
         <ImageAnalysis aiResponse={aiResponse} />
       </div>
 

@@ -8,12 +8,10 @@ const ImageAnalysis = ({ aiResponse }) => {
 
   const { sentiment_rating, reasoning_text, detected_objects } = aiResponse;
 
-  //capitalize first letter of sentiment_rating
   const capitalizeSentimentRating = sentiment_rating
     ? sentiment_rating.charAt(0).toUpperCase() + sentiment_rating.slice(1)
-    : '';
+    : "";
 
-  //capitalize first letter for each object in the detected_objects array
   const capitalizeDetectedObjects = detected_objects
     ? detected_objects.map((object) =>
         object
