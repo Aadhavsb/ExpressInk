@@ -33,3 +33,28 @@
     font-size: 28px;
   }
 }
+
+.download-button-container {
+  text-align: center;
+  margin: 20px 0 40px; /* Adjust margins as needed */
+}
+
+.download-button {
+  background-color: #0c96e4;
+  color: #ffffff;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.download-button:hover {
+  background-color: #0a7ec1;
+}
+
+.download-button:active {
+  background-color: #075a8c;
+}

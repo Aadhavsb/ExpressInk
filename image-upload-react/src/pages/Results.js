@@ -150,6 +150,44 @@ const Results = () => {
     },
   };
 
+  const downloadCSV = () => {
+    const csvRows = [];
+
+    const headers = [
+      "Timestamp",
+      "Sentiment Rating",
+      "Sentiment Score",
+      "Detected Objects",
+    ];
+    csvRows.push(headers.join(","));
+
+    history.forEach((entry) => {
+      const date = dayjs(entry.time_stamp).format("YYYY-MM-DD HH:mm:ss");
+      const sentimentRating = entry.sentiment_rating;
+      const sentimentScore = sentimentMap[entry.sentiment_rating];
+      const detectedObjects = entry.detected_objects.join("; ");
+
+      const row = [
+        `"${date}"`,
+        `"${sentimentRating}"`,
+        sentimentScore,
+        `"${detectedObjects}"`,
+      ];
+      csvRows.push(row.join(","));
+    });
+
+    const csvString = csvRows.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "expressink_results.csv";
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+  };
+
   if (loading) return <p>Loading...</p>;
 
   return (
@@ -157,6 +195,11 @@ const Results = () => {
       <div className="results-title-div">
         <h1 className="results-title">Mood Trends</h1>
         <Line data={chartData} options={chartOptions} />
+      </div>
+      <div className="download-button-container">
+        <button className="download-button" onClick={downloadCSV}>
+          Download Results as CSV
+        </button>
       </div>
       <Footer />
     </div>

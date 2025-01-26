@@ -37,10 +37,10 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
   };
 
   const uploadImage = async (file) => {
-    const imageUrl = URL.createObjectURL(file); // Local preview
+    const imageUrl = URL.createObjectURL(file);
     setUploadedImage(imageUrl);
     setIsImageUploaded(true);
-    setIsAnalysisComplete(false); // Reset analysis state
+    setIsAnalysisComplete(false);
 
     const formData = new FormData();
     formData.append("image", file);
@@ -54,7 +54,6 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
         }
       );
 
-      // Use the full URL for the image
       setImageUrl(`http://localhost:8000${response.data.imagePath}`);
 
       if (onFileUpload) {
@@ -70,10 +69,9 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
     setIsAnalysisComplete(false);
     setProgress(0);
 
-    // Simulate progress
     let fakeProgress = 0;
     const progressInterval = setInterval(() => {
-      fakeProgress += 10;
+      fakeProgress += 5;
       setProgress(fakeProgress);
       if (fakeProgress >= 100) {
         clearInterval(progressInterval);
@@ -86,14 +84,12 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
   };
 
   const handleUploadNewImage = () => {
-    // Reset local state related to the uploaded image and analysis
     setUploadedImage(null);
     setIsImageUploaded(false);
     setIsAnalysisComplete(false);
     setProgress(0);
     setImageUrl("");
 
-    // Notify the parent component (Home.js) to reset aiResponse
     if (onUploadNewImage) {
       onUploadNewImage();
     }

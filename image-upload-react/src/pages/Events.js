@@ -254,6 +254,73 @@ const Events = () => {
     return eventInfo.some((event) => event.start_date === formattedDate);
   };
 
+  const downloadEventsCSV = () => {
+    // Convert events data to CSV string
+    const csvRows = [];
+
+    // Define the headers
+    const headers = ["Title", "Start Date", "Start Time", "Location"];
+    csvRows.push(headers.join(","));
+
+    // Map the events data to CSV rows
+    eventInfo.forEach((event) => {
+      const row = [
+        `"${event.title}"`,
+        `"${event.start_date}"`,
+        event.start_time ? `"${event.start_time}"` : "",
+        event.location ? `"${event.location}"` : "",
+      ];
+      csvRows.push(row.join(","));
+    });
+
+    // Create a Blob from the CSV string
+    const csvString = csvRows.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a temporary link to trigger the download
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "expressink_events.csv";
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+  };
+
+  const downloadSelectedDateEventsCSV = () => {
+    const csvRows = [];
+
+    const headers = ["Title", "Start Date", "Start Time", "Location"];
+    csvRows.push(headers.join(","));
+
+    eventsForSelectedDate.forEach((event) => {
+      const row = [
+        `"${event.title}"`,
+        `"${event.start_date}"`,
+        event.start_time ? `"${event.start_time}"` : "",
+        event.location ? `"${event.location}"` : "",
+      ];
+      csvRows.push(row.join(","));
+    });
+
+    if (csvRows.length === 1) {
+      alert("No events to download for the selected date.");
+      return;
+    }
+
+    const csvString = csvRows.join("\n");
+    const blob = new Blob([csvString], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    const formattedDate = date.toISOString().split("T")[0];
+    link.download = `expressink_events_${formattedDate}.csv`;
+    link.click();
+
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="app-container">
       <div className="events-container">
@@ -293,6 +360,17 @@ const Events = () => {
           ) : (
             <p>No events scheduled on this day.</p>
           )}
+        </div>
+        <div className="download-button-container">
+          <button className="download-button" onClick={downloadEventsCSV}>
+            Download All Events as CSV
+          </button>
+          <button
+            className="download-button"
+            onClick={downloadSelectedDateEventsCSV}
+          >
+            Download Events for Selected Date as CSV
+          </button>
         </div>
       </div>
       <Footer />
