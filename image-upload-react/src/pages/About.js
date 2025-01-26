@@ -3,6 +3,7 @@ import TeamCard from "./Team/TeamCard";
 import teamData from "./Team/TeamData";
 import "./About.css";
 import "./Team/TeamGrid.css";
+import Footer from "../components/Footer";
 
 const About = () => {
   return (
@@ -64,6 +65,7 @@ const About = () => {
           <strong>Email:</strong> ssc151@case.edu
         </p>
       </section>
+      <Footer />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import {
 } from "chart.js";
 import dayjs from "dayjs";
 import "./Results.css";
+import Footer from "../components/Footer";
 
 ChartJS.register(
   LineElement,
@@ -152,9 +153,12 @@ const Results = () => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="results-title-div">
-      <h1 className="results-title">Mood Trends</h1>
-      <Line data={chartData} options={chartOptions} />
+    <div className="results-container">
+      <div className="results-title-div">
+        <h1 className="results-title">Mood Trends</h1>
+        <Line data={chartData} options={chartOptions} />
+      </div>
+      <Footer />
     </div>
   );
 };
