@@ -1,46 +1,72 @@
 import React, { useEffect, useState } from "react";
 
+import {
+  Chart as ChartJS,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+
+import "./Results.css";
+
+ChartJS.register(
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
 const Results = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(null);
+  const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/data.json");
+    // Fetch data from JSON file
+    fetch("/data.json")
+      .then((response) => response.json())
+      .then((data) => {
+        // Process data for chart
+        const labels = data.map((item) => item.timestamp);
+        const values = data.map((item) => item.sentiment_rating);
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-
-        const jsonData = await response.json();
-
-        setData(jsonData);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    fetchData();
+        setChartData({
+          labels,
+          datasets: [
+            {
+              label: "Sentiment Trend",
+              data: values,
+              borderColor: "rgba(75, 192, 192, 1)",
+              backgroundColor: "rgba(75, 192, 192, 0.2)",
+              tension: 0.4, // Smooth curve
+              fill: true,
+            },
+          ],
+        });
+      });
   }, []);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div>
-      <h2>Results:</h2>
-      {data.length === 0 ? (
-        <p>Loading...</p>
+    <div style={{ width: "600px", margin: "auto" }}>
+      {chartData ? (
+        <Line
+          data={chartData}
+          options={{
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+              title: { display: true, text: "Trend Over Time" },
+            },
+          }}
+        />
       ) : (
-        <ul>
-          {data.map((item) => (
-            <li key={item.sentiment_rating}>
-              <h3>{item.reasoning_text}</h3>
-            </li>
-          ))}
-        </ul>
+        <p>Loading chart...</p>
       )}
     </div>
   );
