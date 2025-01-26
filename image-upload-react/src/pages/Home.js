@@ -62,7 +62,7 @@ const Home = () => {
       </div>
 
       <div>
-        <h1 className="upload-line">Upload your child's drawing here</h1>
+        <h1 className="upload-line">Upload Drawing Below</h1>
         <ImageUpload
           onFileUpload={handleFileUpload}
           onUploadNewImage={handleUploadNewImage}
