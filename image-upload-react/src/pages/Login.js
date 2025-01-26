@@ -7,12 +7,17 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (email === "user@example.com" && password === "password") {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(
+      (user) => user.email === email && user.password === password
+    );
+
+    if (user) {
       localStorage.setItem("isAuthenticated", "true");
+      localStorage.setItem("username", user.username || user.email);
 
       navigate("/");
     } else {
