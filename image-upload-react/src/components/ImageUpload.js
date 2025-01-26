@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ProgressBar from "./ProgressBar";
 import "./ImageUpload.css";
 
 const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
@@ -133,9 +134,7 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
       {isImageUploaded && (
         <div className="controls">
           {isAnalyzing ? (
-            <div className="progress-bar-container">
-              <div className="progress-bar" style={{ width: `${progress}%` }} />
-            </div>
+            <ProgressBar progress={progress} />
           ) : isAnalysisComplete ? (
             <button
               className="upload-new-image-button"

@@ -47,10 +47,14 @@ const Home = () => {
     getRandomPrompt();
   }, []);
 
-  const handleDrawingSave = (dataUrl) => {
-    const file = dataURLtoFile(dataUrl, "drawing.png");
+  const handleDrawingAnalyze = (savedDrawingDataUrl) => {
+    const file = dataURLtoFile(savedDrawingDataUrl, "drawing.png");
 
     uploadImage(file);
+  };
+
+  const handleResetAnalysis = () => {
+    setAiResponse(null);
   };
 
   const dataURLtoFile = (dataurl, filename) => {
@@ -60,11 +64,9 @@ const Home = () => {
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
-
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-
     return new File([u8arr], filename, { type: mime });
   };
 
@@ -117,7 +119,10 @@ const Home = () => {
             <p>
               Want to draw live?{" "}
               <button
-                onClick={() => setShowDrawing(true)}
+                onClick={() => {
+                  setShowDrawing(true);
+                  setAiResponse(null);
+                }}
                 className="toggle-button"
               >
                 Switch to Drawing Mode
@@ -126,11 +131,17 @@ const Home = () => {
           </div>
         ) : (
           <div>
-            <DrawingCanvas onSave={handleDrawingSave} />
+            <DrawingCanvas
+              onAnalyze={handleDrawingAnalyze}
+              onResetAnalysis={handleResetAnalysis}
+            />
             <p>
               Want to upload an image instead?{" "}
               <button
-                onClick={() => setShowDrawing(false)}
+                onClick={() => {
+                  setShowDrawing(false);
+                  setAiResponse(null);
+                }}
                 className="toggle-button"
               >
                 Switch to Image Upload
