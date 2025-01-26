@@ -1,7 +1,8 @@
 .app-container-about {
   max-width: 1500px;
   margin: auto;
-  padding: 40px;
+  padding: 100px;
+  margin-top: 0;
   font-family: Arial, sans-serif;
   color: #333;
 }
