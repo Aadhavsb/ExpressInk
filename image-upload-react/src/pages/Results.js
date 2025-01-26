@@ -1,39 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const Results = () => {
-  // State to store the data from the JSON file
   const [data, setData] = useState([]);
-  // State to handle any errors
   const [error, setError] = useState(null);
 
-  // Fetch the JSON file on component mount
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch the JSON file from the public folder
-        const response = await fetch('/data.json');
-        
-        // Check if response is okay
+        const response = await fetch("/data.json");
+
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error("Failed to fetch data");
         }
-        
-        // Parse the JSON response
+
         const jsonData = await response.json();
-        
-        // Set the data in the state
+
         setData(jsonData);
       } catch (err) {
-        // Handle errors
         setError(err.message);
       }
     };
 
-    // Call the function to fetch data
     fetchData();
-  }, []); // Empty dependency array ensures this runs only once when the component mounts
+  }, []);
 
-  // Render the data
   if (error) {
     return <div>Error: {error}</div>;
   }
