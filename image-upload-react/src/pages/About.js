@@ -54,7 +54,7 @@ const About = () => {
         ))}
       </div>
 
-      <section className="about-section">
+      <section className="connect-section">
         <h2 className="section-title">Contact Info</h2>
         <p className="section-content">
           We would love to hear from you! Whether you have questions, feedback,
