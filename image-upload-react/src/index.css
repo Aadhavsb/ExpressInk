@@ -1,11 +1,12 @@
 body {
   margin: 0;
-  font-family: 'Poppins', 'Quicksand', 'Nunito', 'Segoe UI', 'Roboto', sans-serif;
+  font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
 }
 
 code {
-  font-family: 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: "Fira Code", Menlo, Monaco, Consolas, "Courier New", monospace;
 }

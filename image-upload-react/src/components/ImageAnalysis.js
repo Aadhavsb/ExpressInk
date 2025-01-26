@@ -13,7 +13,7 @@ const ImageAnalysis = ({ aiResponse }) => {
       <h2>Image Analysis Results</h2>
       <div className="analysis-content">
         <div className="analysis-item">
-          <h3>Sentiment Rating:</h3>
+          <h3>Mood Rating:</h3>
           <p className="sentiment-rating">{sentiment_rating}</p>
         </div>
 
