@@ -6,6 +6,18 @@ const { Configuration, OpenAI } = require("openai");
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const mongoose = require('mongoose');
+
+// Import models
+const User = require('./models/User');
+const Analysis = require('./models/Analysis');
+
+// Import routes
+const authRoutes = require('./routes/auth');
+const analysisRoutes = require('./routes/analysis');
+
+// Import middleware
+const { auth, optionalAuth } = require('./middleware/auth');
 
 require('dotenv').config();
 
@@ -13,8 +25,17 @@ require('dotenv').config();
 const app = express();
 const port = 8000;
 
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('MongoDB connection error:', err));
+
 app.use(bodyParser.json());
 app.use(cors());
+
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/analysis', analysisRoutes);
 
 const openai = new OpenAI({
   baseURL: "https://api.omnistack.sh/openai/v1", 
@@ -39,13 +60,15 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Route: Handle image upload
-app.post('/upload', upload.single('image'), async (req, res) => {
+app.post('/upload', optionalAuth, upload.single('image'), async (req, res) => {
   if (!req.file) {
-    return res.status(400).send('No file uploaded.');
+    return res.status(400).json({ error: 'No file uploaded.' });
   }
 
   const filename = req.file.filename;
   const filePath = `/uploads/${filename}`;
+  const startTime = Date.now();
+  
   try {
     console.log(`Received image upload from backend. File name: ${filename}`);
 
@@ -54,15 +77,47 @@ app.post('/upload', upload.single('image'), async (req, res) => {
 
     // Get the OpenAI response (actually omnistack)
     const aiResponse = await getOpenAICompletion(base64Image);
+    const processingTime = Date.now() - startTime;
 
     if (aiResponse) {
+      // Save to JSON file for backward compatibility
       saveAnalysisToFile(aiResponse);
+      
+      // Save to database if user is authenticated
+      if (req.user) {
+        try {
+          const analysisData = {
+            userId: req.user._id,
+            imageUrl: filePath,
+            originalFilename: req.file.originalname,
+            filename: filename,
+            analysisType: 'upload',
+            sentimentAnalysis: {
+              overallSentiment: mapSentimentRating(aiResponse.sentiment_rating),
+              confidence: 0.8, // Default confidence since omnistack doesn't provide this
+              detailedAnalysis: aiResponse.reasoning_text,
+              keyElements: aiResponse.detected_objects || []
+            },
+            aiResponse: JSON.stringify(aiResponse),
+            processingTime: processingTime
+          };
+
+          const analysis = new Analysis(analysisData);
+          await analysis.save();
+          console.log('Analysis saved to database for user:', req.user.username);
+        } catch (dbError) {
+          console.error('Error saving to database:', dbError);
+          // Continue execution even if database save fails
+        }
+      }
     }
 
     res.json({ 
       message: 'File uploaded successfully.', 
       imagePath: filePath,
-      aiResponse: aiResponse
+      aiResponse: aiResponse,
+      processingTime: processingTime,
+      savedToDatabase: !!req.user
     });
   } catch (error) {
     console.error("Error during image processing:", error);
@@ -101,6 +156,18 @@ for another one
   ]
 }
 `;
+
+// Helper function to map sentiment rating to standard format
+function mapSentimentRating(rating) {
+  const lowerRating = rating.toLowerCase();
+  if (lowerRating.includes('positive') || lowerRating.includes('happy') || lowerRating.includes('joy')) {
+    return 'positive';
+  } else if (lowerRating.includes('negative') || lowerRating.includes('sad') || lowerRating.includes('angry')) {
+    return 'negative';
+  } else {
+    return 'neutral';
+  }
+}
 
 async function getOpenAICompletion(base64String) {
   try {
@@ -193,20 +260,37 @@ function saveAnalysisToFile(aiResponse) {
   fs.writeFileSync(filePath, JSON.stringify(analyses, null, 2));
 }
 
-app.get('/json-history', (req, res) => {
-  const filePath = path.join(__dirname, 'sentiment_analysis.json');
-  
+app.get('/json-history', optionalAuth, async (req, res) => {
   try {
+    // If user is authenticated, get from database
+    if (req.user) {
+      const analyses = await Analysis.find({ userId: req.user._id })
+        .sort({ createdAt: -1 })
+        .select('sentimentAnalysis.overallSentiment sentimentAnalysis.keyElements createdAt')
+        .limit(50);
+
+      const formattedAnalyses = analyses.map(analysis => ({
+        sentiment_rating: analysis.sentimentAnalysis.overallSentiment,
+        detected_objects: analysis.sentimentAnalysis.keyElements,
+        time_stamp: analysis.createdAt.toISOString()
+      }));
+
+      return res.json(formattedAnalyses);
+    }
+
+    // Fallback to file system for non-authenticated users
+    const filePath = path.join(__dirname, 'sentiment_analysis.json');
+    
     if (fs.existsSync(filePath)) {
       const fileData = fs.readFileSync(filePath);
       const analyses = JSON.parse(fileData);
       res.json(analyses);
     } else {
-      res.status(404).send({ error: "No json history file found" });
+      res.status(404).json({ error: "No analysis history found" });
     }
   } catch (error) {
-    console.error("Error reading history file", error);
-    res.status(500).send({ error: "Error 500: Error getting sentiment analysis history" });
+    console.error("Error reading history:", error);
+    res.status(500).json({ error: "Error getting sentiment analysis history", details: error.message });
   }
 });
 
