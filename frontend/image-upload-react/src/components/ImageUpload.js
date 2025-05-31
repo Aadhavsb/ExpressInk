@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 import ProgressBar from "./ProgressBar";
 import "./ImageUpload.css";
 
 const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
+  const { getAuthHeaders } = useAuth();
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedImage, setUploadedImage] = useState(null);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
@@ -35,8 +37,7 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
     if (file) {
       uploadImage(file);
     }
-  };
-  const uploadImage = async (file) => {
+  };  const uploadImage = async (file) => {
     const imageUrl = URL.createObjectURL(file);
     setUploadedImage(imageUrl);
     setIsImageUploaded(true);
@@ -44,17 +45,6 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
 
     const formData = new FormData();
     formData.append("image", file);
-
-    // Get JWT token from localStorage
-    const token = localStorage.getItem("token");
-    const headers = {
-      "Content-Type": "multipart/form-data",
-    };
-
-    // Add authorization header if token exists
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
-    }
 
     try {
       setIsAnalyzing(true);
@@ -64,17 +54,16 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
         "http://localhost:8000/upload",
         formData,
         {
-          headers,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            ...getAuthHeaders()
+          },
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
               (progressEvent.loaded * 100) / progressEvent.total
             );
             setProgress(percentCompleted);
           },
-        }
-      );
-        {
-          headers: { "Content-Type": "multipart/form-data" },
         }
       );
 

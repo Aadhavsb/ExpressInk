@@ -77,9 +77,8 @@ const Header = () => {
             Login
           </Link>
         ) : (
-          <div className="username-dropdown" ref={dropdownRef}>
-            <span onClick={toggleDropdown} className="username">
-              {username}
+          <div className="username-dropdown" ref={dropdownRef}>            <span onClick={toggleDropdown} className="username">
+              {user?.firstName || user?.username || 'User'}
             </span>
             {dropdownOpen && (
               <ul className="dropdown-menu">

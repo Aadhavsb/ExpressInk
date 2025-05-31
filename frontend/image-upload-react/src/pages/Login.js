@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [login, setLogin] = useState("");
+  const { login } = useAuth();
+  const [loginField, setLoginField] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -21,7 +23,7 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          login,
+          login: loginField,
           password,
         }),
       });
@@ -29,11 +31,8 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Store JWT token and user info
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("isAuthenticated", "true");
-
+        // Use AuthContext login method
+        login(data.token, data.user);
         navigate("/");
       } else {
         setError(data.error || "Login failed");
@@ -59,9 +58,8 @@ const Login = () => {
             type="text"
             id="login"
             name="login"
-            placeholder="email@example.com or username"
-            value={login}
-            onChange={(e) => setLogin(e.target.value)}
+            placeholder="email@example.com or username"            value={loginField}
+            onChange={(e) => setLoginField(e.target.value)}
             required
           />
         </div>

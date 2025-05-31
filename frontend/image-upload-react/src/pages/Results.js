@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 import { Line, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -30,6 +31,7 @@ ChartJS.register(
 );
 
 const Results = () => {
+  const { getAuthHeaders } = useAuth();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,18 +41,9 @@ const Results = () => {
   const fetchHistory = async () => {
     try {
       setLoading(true);
-      
-      // Get JWT token from localStorage
-      const token = localStorage.getItem("token");
-      const headers = {};
-
-      // Add authorization header if token exists
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
 
       const response = await axios.get("http://localhost:8000/json-history", {
-        headers
+        headers: getAuthHeaders()
       });
       setHistory(response.data);
       setLoading(false);
