@@ -121,61 +121,59 @@ const Home = () => {
           Analyze the emotions conveyed in your child's artwork instantly with
           our AI-powered insights!
         </p>
-      </header>
-
-      {/* Wave divider */}
+      </header>      {/* Wave divider */}
       <div className="wave-divider"></div>
 
-      <div className="prompt" onClick={getRandomPrompt}>
-        <h2>Suggested Prompt:</h2>
-        <p className="prompt-text">{SuggestedPrompt}</p>
-      </div>
+      {/* Main content container for side-by-side layout */}
+      <div className="main-content">
+        <div className="prompt" onClick={getRandomPrompt}>
+          <h2>Suggested Prompt:</h2>
+          <p className="prompt-text">{SuggestedPrompt}</p>
+        </div>
 
-      {/* Section wave */}
-      <div className="section-wave"></div>
+        <div className="upload-drawing-container">
+          <h1 className="upload-line">Upload Image or Draw Here</h1>
 
-      <div className="upload-drawing-container">
-        <h1 className="upload-line">Upload Image or Draw Here</h1>
-
-        {!showDrawing ? (
-          <div>
-            <ImageUpload
-              onFileUpload={handleFileUpload}
-              onUploadNewImage={handleUploadNewImage}
-            />
-            <p className="mode-switch-text">
-              Want to draw live?{" "}
-              <button
-                onClick={() => {
-                  setShowDrawing(true);
-                  setAiResponse(null);
-                }}
-                className="toggle-button"
-              >
-                Switch to Drawing Mode
-              </button>
-            </p>
-          </div>
-        ) : (
-          <div>
-            <DrawingCanvas
-              onAnalyze={handleDrawingAnalyze}
-              onResetAnalysis={handleResetAnalysis}
-            />
-            <p className="mode-switch-text">
-              Want to upload an image instead?{" "}
-              <button
-                onClick={() => {
-                  setShowDrawing(false);
-                  setAiResponse(null);
-                }}
-                className="toggle-button"
-              >
-                Switch to Image Upload
-              </button>
-            </p>
-          </div>
-        )}
+          {!showDrawing ? (
+            <div>
+              <ImageUpload
+                onFileUpload={handleFileUpload}
+                onUploadNewImage={handleUploadNewImage}
+              />
+              <p className="mode-switch-text">
+                Want to draw live?{" "}
+                <button
+                  onClick={() => {
+                    setShowDrawing(true);
+                    setAiResponse(null);
+                  }}
+                  className="toggle-button"
+                >
+                  Switch to Drawing Mode
+                </button>
+              </p>
+            </div>
+          ) : (
+            <div>
+              <DrawingCanvas
+                onAnalyze={handleDrawingAnalyze}
+                onResetAnalysis={handleResetAnalysis}
+              />
+              <p className="mode-switch-text">
+                Want to upload an image instead?{" "}
+                <button
+                  onClick={() => {
+                    setShowDrawing(false);
+                    setAiResponse(null);
+                  }}
+                  className="toggle-button"
+                >
+                  Switch to Image Upload
+                </button>
+              </p>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Analysis wave */}
