@@ -88,9 +88,103 @@ body {
 }
 
 .connect-section {
-  background-color: #ffffff;
+  max-width: 1200px;
+  margin: auto;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
   padding: 40px;
-  margin: 60px 200px 60px 200px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 60px;
+  border-radius: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: 2px solid #4a5568;
+}
+
+/* Contact Cards Styling */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.contact-card {
+  background: linear-gradient(135deg, #1e1b3e 0%, #2d3748 100%);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  border: 2px solid #4a5568;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  border-color: #a855f7;
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+}
+
+.contact-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  filter: grayscale(0.3);
+}
+
+.contact-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #a855f7;
+  margin-bottom: 10px;
+  font-family: 'Baloo 2', cursive;
+}
+
+.contact-details {
+  font-size: 16px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.contact-description {
+  font-size: 14px;
+  color: #cbd5e0;
+  font-family: 'Poppins', sans-serif;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .contact-card {
+    padding: 25px;
+  }
+}
+
+/* Team Section Styling */
+.team-section {
+  max-width: 1200px;
+  margin: auto;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  padding: 40px;
+  margin-bottom: 40px;
+  border-radius: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: 2px solid #4a5568;
+  text-align: center;
+}
+
+.team-title {
+  margin-bottom: 15px;
+}
+
+.team-description {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Update team grid margin */
+.team-grid {
+  margin-bottom: 60px;
 }

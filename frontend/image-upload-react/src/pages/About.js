@@ -43,7 +43,15 @@ const About = () => {
           <li><strong>Jason Li</strong> - Full Stack</li>
           <li><strong>Dakin Muhlner</strong> - Full Stack</li>
         </ul>
-      </section> */}
+      </section> */}      <section className="team-section">
+        <h2 className="section-title team-title">Meet Our Team</h2>
+        <p className="section-content team-description">
+          As part of HackCWRU 2025, we built ExpressInk using Node.js and React. 
+          Our diverse team brings together expertise in full-stack development, 
+          AI integration, and user experience design.
+        </p>
+      </section>
+
       <div className="team-grid">
         {teamData.map((member) => (
           <TeamCard
@@ -53,17 +61,35 @@ const About = () => {
             bio={member.bio}
           />
         ))}
-      </div>
-
-      <section className="connect-section">
-        <h2 className="section-title">Contact Info</h2>
+      </div><section className="connect-section">
+        <h2 className="section-title">Get In Touch</h2>
         <p className="section-content">
           We would love to hear from you! Whether you have questions, feedback,
           or just want to say hello, feel free to reach out!
         </p>
-        <p className="section-content">
-          <strong>Email:</strong> ssc151@case.edu
-        </p>
+        
+        <div className="contact-grid">
+          <div className="contact-card">
+            <div className="contact-icon">📧</div>
+            <h3 className="contact-title">Email Us</h3>
+            <p className="contact-details">ssc151@case.edu</p>
+            <p className="contact-description">Send us your questions or feedback</p>
+          </div>
+          
+          <div className="contact-card">
+            <div className="contact-icon">🏫</div>
+            <h3 className="contact-title">University</h3>
+            <p className="contact-details">Case Western Reserve University</p>
+            <p className="contact-description">HackCWRU 2025 Project</p>
+          </div>
+          
+          <div className="contact-card">
+            <div className="contact-icon">💻</div>
+            <h3 className="contact-title">GitHub</h3>
+            <p className="contact-details">ExpressInk Repository</p>
+            <p className="contact-description">Check out our source code</p>
+          </div>
+        </div>
       </section>
       <Footer />
     </div>
