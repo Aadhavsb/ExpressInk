@@ -1,46 +1,45 @@
 .events-container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto 50px;
-  padding: 90px 20px 20px; /* Added top padding for fixed navbar */
-  font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
-    sans-serif;
-  color: #333;
+  padding: 90px 40px 40px;
+  font-family: 'Poppins', sans-serif;
+  color: #e2e8f0;
+  background: linear-gradient(135deg, #1e1b3e 0%, #2d3748 50%, #1a202c 100%);
+  min-height: 100vh;
 }
 
 .events-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 50%, #6d28d9 100%);
+  border-radius: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .events-title {
   font-size: 36px;
   font-weight: bold;
-  color: #0c96e4;
+  color: #ffffff;
   margin-bottom: 10px;
-  font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
-    sans-serif;
+  font-family: 'Baloo 2', cursive;
 }
 
 .events-description {
   font-size: 18px;
-  color: #666666;
-  font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
-    sans-serif;
+  color: #e2e8f0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .calendar-container {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
 }
 
 .calendar-container .react-calendar {
   width: 100%;
-  max-width: 100%;
-  background-color: #fff;
-  border: none;
-  font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
-    sans-serif;
-  font-size: 18px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
 }
 
 .calendar-container .react-calendar__navigation button {
