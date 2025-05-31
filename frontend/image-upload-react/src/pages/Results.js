@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Line } from "react-chartjs-2";
+import { Line, Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   LineElement,
@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
   Filler,
+  ArcElement,
 } from "chart.js";
 import dayjs from "dayjs";
 import "./Results.css";
@@ -24,7 +25,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
+  ArcElement
 );
 
 const Results = () => {
@@ -54,7 +56,6 @@ const Results = () => {
     positive: 1,
     "very positive": 2,
   };
-
   const chartData = {
     labels: history.map((entry) => {
       const date = dayjs(entry.time_stamp);
@@ -64,37 +65,86 @@ const Results = () => {
       {
         label: "Sentiment",
         data: history.map((entry) => sentimentMap[entry.sentiment_rating]),
-        borderColor: "rgba(12, 150, 228, 1)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderWidth: 7,
-        tension: 0,
-        pointBorderColor: "rgba(12, 150, 228, 1)",
-        pointBackgroundColor: "#fff",
+        borderColor: "rgba(168, 85, 247, 1)",
+        backgroundColor: "rgba(168, 85, 247, 0.1)",
+        borderWidth: 3,
+        tension: 0.4,
+        pointBorderColor: "rgba(168, 85, 247, 1)",
+        pointBackgroundColor: "#2d3748",
+        pointBorderWidth: 3,
+        pointRadius: 6,
         fill: true,
       },
     ],
   };
 
+  // Calculate sentiment distribution for pie chart
+  const sentimentCounts = {
+    positive: 0,
+    neutral: 0,
+    negative: 0,
+  };
+
+  history.forEach((entry) => {
+    const score = sentimentMap[entry.sentiment_rating];
+    if (score > 0) {
+      sentimentCounts.positive++;
+    } else if (score < 0) {
+      sentimentCounts.negative++;
+    } else {
+      sentimentCounts.neutral++;
+    }
+  });
+
+  const pieChartData = {
+    labels: ['Positive', 'Neutral', 'Negative'],
+    datasets: [
+      {
+        data: [sentimentCounts.positive, sentimentCounts.neutral, sentimentCounts.negative],
+        backgroundColor: [
+          'rgba(16, 185, 129, 0.8)',  // Green for positive
+          'rgba(139, 92, 246, 0.8)',  // Purple for neutral
+          'rgba(239, 68, 68, 0.8)',   // Red for negative
+        ],
+        borderColor: [
+          'rgba(16, 185, 129, 1)',
+          'rgba(139, 92, 246, 1)',
+          'rgba(239, 68, 68, 1)',
+        ],
+        borderWidth: 2,
+      },
+    ],
+  };
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
         position: "top",
         labels: {
           font: {
-            size: 16,
+            size: 14,
+            family: 'Poppins',
           },
+          color: '#e2e8f0',
         },
       },
       tooltip: {
         enabled: true,
         titleFont: {
           size: 14,
+          family: 'Poppins',
         },
         bodyFont: {
           size: 14,
+          family: 'Poppins',
         },
+        backgroundColor: 'rgba(45, 55, 72, 0.9)',
+        titleColor: '#e2e8f0',
+        bodyColor: '#cbd5e0',
+        borderColor: '#718096',
+        borderWidth: 1,
         callbacks: {
           label: (context) => {
             const sentimentLabels = {
@@ -115,17 +165,21 @@ const Results = () => {
           display: true,
           text: "Sentiment Score",
           font: {
-            size: 24,
+            size: 16,
+            family: 'Poppins',
           },
+          color: '#e2e8f0',
         },
         ticks: {
           stepSize: 1,
           font: {
-            size: 20,
+            size: 12,
+            family: 'Poppins',
           },
+          color: '#cbd5e0',
           callback: (value) => {
             const labels = {
-              "-2": "Very Negative", //MAKE SURE TO MAKE THESE LOWERCASE (i changed the backend to toLowerCase before parsing to frontend)
+              "-2": "Very Negative",
               "-1": "Negative ",
               0: "Neutral",
               1: "Positive",
@@ -134,19 +188,60 @@ const Results = () => {
             return labels[value] || value;
           },
         },
+        grid: {
+          color: 'rgba(113, 128, 150, 0.3)',
+        },
       },
       x: {
         title: {
           display: true,
           text: "Date",
           font: {
-            size: 20,
+            size: 16,
+            family: 'Poppins',
           },
+          color: '#e2e8f0',
         },
         ticks: {
           font: {
-            size: 20,
+            size: 12,
+            family: 'Poppins',
           },
+          color: '#cbd5e0',
+        },
+        grid: {
+          color: 'rgba(113, 128, 150, 0.3)',
+        },
+      },
+    },
+  };
+
+  const pieChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          font: {
+            size: 14,
+            family: 'Poppins',
+          },
+          color: '#e2e8f0',
+          padding: 20,
+        },
+      },
+      tooltip: {
+        backgroundColor: 'rgba(45, 55, 72, 0.9)',
+        titleColor: '#e2e8f0',
+        bodyColor: '#cbd5e0',
+        borderColor: '#718096',
+        borderWidth: 1,
+        titleFont: {
+          family: 'Poppins',
+        },
+        bodyFont: {
+          family: 'Poppins',
         },
       },
     },
@@ -189,20 +284,58 @@ const Results = () => {
 
     window.URL.revokeObjectURL(url);
   };
-
-  if (loading) return <p>Loading...</p>;
+  if (loading) return (
+    <div className="results-container">
+      <div className="loading-container">
+        <p className="loading-text">Loading your mood trends...</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="results-container">
-      <div className="results-title-div">
-        <h1 className="results-title">Mood Trends</h1>
-        <Line data={chartData} options={chartOptions} />
+      <div className="results-header">
+        <h1 className="results-title">Mood Trends & Analysis</h1>
+        <p className="results-subtitle">Track your emotional journey through your artwork</p>
       </div>
-      <div className="download-button-container">
+      
+      <div className="charts-container">
+        <div className="chart-section line-chart-section">
+          <h2 className="chart-title">Sentiment Over Time</h2>
+          <div className="chart-wrapper">
+            <Line data={chartData} options={chartOptions} />
+          </div>
+        </div>
+        
+        <div className="chart-section pie-chart-section">
+          <h2 className="chart-title">Overall Sentiment Distribution</h2>
+          <div className="chart-wrapper pie-wrapper">
+            <Pie data={pieChartData} options={pieChartOptions} />
+          </div>
+          <div className="sentiment-stats">
+            <div className="stat-item positive">
+              <span className="stat-number">{sentimentCounts.positive}</span>
+              <span className="stat-label">Positive</span>
+            </div>
+            <div className="stat-item neutral">
+              <span className="stat-number">{sentimentCounts.neutral}</span>
+              <span className="stat-label">Neutral</span>
+            </div>
+            <div className="stat-item negative">
+              <span className="stat-number">{sentimentCounts.negative}</span>
+              <span className="stat-label">Negative</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="download-section">
         <button className="download-button" onClick={downloadCSV}>
+          <span className="download-icon">📊</span>
           Download Results as CSV
         </button>
       </div>
+      
       <Footer />
     </div>
   );

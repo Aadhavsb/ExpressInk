@@ -1,60 +1,217 @@
-.results-title-div {
-  max-width: 1200px;
-  margin: 80px auto 50px;
-  padding: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+.results-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e1b3e 0%, #2d3748 50%, #1a202c 100%);
+  font-family: 'Poppins', sans-serif;
+  color: #e2e8f0;
+  padding-top: 90px;
+}
+
+.results-header {
   text-align: center;
+  margin-bottom: 3rem;
+  padding: 0 2rem;
 }
 
 .results-title {
-  font-size: 36px;
-  font-weight: bold;
-  color: #0c96e4;
-  margin-bottom: 40px;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+  font-family: 'Baloo 2', cursive;
+  background: linear-gradient(45deg, #a855f7, #8b5cf6, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.results-title-div canvas {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  max-width: 100%;
-  height: auto;
+.results-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: #cbd5e0;
+  font-weight: 400;
+  margin: 0;
 }
 
-.results-title-div p {
-  font-size: 18px;
-  color: #333333;
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
 }
 
-@media (max-width: 768px) {
-  .results-title-div {
-    padding: 10px;
-  }
-
-  .results-title {
-    font-size: 28px;
-  }
+.loading-text {
+  font-size: 1.5rem;
+  color: #a855f7;
+  font-family: 'Baloo 2', cursive;
 }
 
-.download-button-container {
+.charts-container {
+  display: flex;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  flex-wrap: wrap;
+}
+
+.chart-section {
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  border-radius: 25px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: 2px solid #4a5568;
+}
+
+.line-chart-section {
+  flex: 2;
+  min-width: 500px;
+}
+
+.pie-chart-section {
+  flex: 1;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #a855f7;
+  margin-bottom: 1.5rem;
   text-align: center;
-  margin: 20px 0 40px; /* Adjust margins as needed */
+  font-family: 'Baloo 2', cursive;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 400px;
+  background: rgba(30, 27, 62, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+}
+
+.pie-wrapper {
+  height: 300px;
+  margin-bottom: 1.5rem;
+}
+
+.sentiment-stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 15px;
+  background: rgba(30, 27, 62, 0.5);
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.stat-item.positive {
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.stat-item.neutral {
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.stat-item.negative {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  font-family: 'Baloo 2', cursive;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #cbd5e0;
+  margin-top: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.download-section {
+  text-align: center;
+  margin: 3rem 0;
+  padding: 0 2rem;
 }
 
 .download-button {
-  background-color: #0c96e4;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
   color: #ffffff;
-  padding: 12px 24px;
-  font-size: 18px;
-  font-weight: bold;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   border: none;
-  border-radius: 8px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+  font-family: 'Poppins', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .download-button:hover {
-  background-color: #0a7ec1;
+  background: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
 }
 
 .download-button:active {
-  background-color: #075a8c;
+  transform: translateY(0);
+}
+
+.download-icon {
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1024px) {
+  .charts-container {
+    flex-direction: column;
+  }
+  
+  .line-chart-section,
+  .pie-chart-section {
+    min-width: unset;
+  }
+}
+
+@media (max-width: 768px) {
+  .results-container {
+    padding-top: 70px;
+  }
+  
+  .charts-container {
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+  
+  .chart-section {
+    padding: 1.5rem;
+  }
+  
+  .chart-wrapper {
+    height: 300px;
+  }
+  
+  .pie-wrapper {
+    height: 250px;
+  }
+  
+  .sentiment-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
