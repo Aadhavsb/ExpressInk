@@ -102,8 +102,7 @@ const Home = () => {
     }
   };
   return (
-    <div className="app-container">
-      {/* Floating toy icons */}
+    <div className="app-container">      {/* Floating toy icons */}
       <div className="floating-toys">
         <div className="toy-icon teddy">🧸</div>
         <div className="toy-icon blocks">🧱</div>
@@ -111,6 +110,18 @@ const Home = () => {
         <div className="toy-icon crayon">🖍️</div>
         <div className="toy-icon star">⭐</div>
         <div className="toy-icon rainbow">🌈</div>
+        <div className="toy-icon rocket">🚀</div>
+        <div className="toy-icon ball">⚽</div>
+        <div className="toy-icon book">📚</div>
+        <div className="toy-icon music">🎵</div>
+        <div className="toy-icon heart">💝</div>
+        <div className="toy-icon butterfly">🦋</div>
+        <div className="toy-icon car">🚗</div>
+        <div className="toy-icon plane">✈️</div>
+        <div className="toy-icon sun">☀️</div>
+        <div className="toy-icon flower">🌸</div>
+        <div className="toy-icon castle">🏰</div>
+        <div className="toy-icon boat">⛵</div>
       </div>
 
       <header className="heading">
@@ -121,63 +132,60 @@ const Home = () => {
           Analyze the emotions conveyed in your child's artwork instantly with
           our AI-powered insights!
         </p>
-      </header>      {/* Wave divider */}
-      <div className="wave-divider"></div>
-
-      {/* Main content container for side-by-side layout */}
-      <div className="main-content">
-        <div className="prompt" onClick={getRandomPrompt}>
+      </header>      {/* Main content container for side-by-side layout */}
+      <div className="main-content">        <div className="prompt" onClick={getRandomPrompt}>
           <h2>Suggested Prompt:</h2>
           <p className="prompt-text">{SuggestedPrompt}</p>
+          
+          <div className="prompt-info">
+            <div className="tip-section">
+              <h3>💡 Drawing Tips:</h3>
+              <ul>
+                <li>Use bright colors to show happiness</li>
+                <li>Draw big when you feel confident</li>
+                <li>Include details that matter to you</li>
+                <li>There's no wrong way to express yourself!</li>
+              </ul>
+            </div>
+            
+            <div className="encouragement">
+              <h3>🌟 Remember:</h3>
+              <p>Every drawing tells a unique story about your feelings and experiences. Take your time and have fun!</p>
+            </div>
+          </div>
         </div>
 
         <div className="upload-drawing-container">
           <h1 className="upload-line">Upload Image or Draw Here</h1>
 
-          {!showDrawing ? (
-            <div>
+          <div className="content-area">
+            {!showDrawing ? (
               <ImageUpload
                 onFileUpload={handleFileUpload}
                 onUploadNewImage={handleUploadNewImage}
               />
-              <p className="mode-switch-text">
-                Want to draw live?{" "}
-                <button
-                  onClick={() => {
-                    setShowDrawing(true);
-                    setAiResponse(null);
-                  }}
-                  className="toggle-button"
-                >
-                  Switch to Drawing Mode
-                </button>
-              </p>
-            </div>
-          ) : (
-            <div>
+            ) : (
               <DrawingCanvas
                 onAnalyze={handleDrawingAnalyze}
                 onResetAnalysis={handleResetAnalysis}
               />
-              <p className="mode-switch-text">
-                Want to upload an image instead?{" "}
-                <button
-                  onClick={() => {
-                    setShowDrawing(false);
-                    setAiResponse(null);
-                  }}
-                  className="toggle-button"
-                >
-                  Switch to Image Upload
-                </button>
-              </p>
-            </div>
-          )}
+            )}
+          </div>
+
+          <p className="mode-switch-text">
+            {!showDrawing ? "Want to draw live? " : "Want to upload an image instead? "}
+            <button
+              onClick={() => {
+                setShowDrawing(!showDrawing);
+                setAiResponse(null);
+              }}
+              className="toggle-button"
+            >
+              {!showDrawing ? "Switch to Drawing Mode" : "Switch to Image Upload"}
+            </button>
+          </p>
         </div>
       </div>
-
-      {/* Analysis wave */}
-      <div className="analysis-wave"></div>
 
       <ImageAnalysis aiResponse={aiResponse} />
 

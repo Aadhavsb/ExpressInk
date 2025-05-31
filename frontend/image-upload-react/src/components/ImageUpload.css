@@ -14,7 +14,7 @@
   width: 800px;
   height: 400px;
   position: relative;
-  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fbbf24 100%);
+  background: linear-gradient(135deg, #4a5568 0%, #718096 100%);
   cursor: pointer;
   transition: all 0.3s ease;
   text-align: center;
@@ -33,7 +33,7 @@
 }
 
 .upload-box.dragging {
-  background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #7c3aed 100%);
+  background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #8b5cf6 100%);
   border-color: #6d28d9;
   transform: scale(1.02);
 }
@@ -45,10 +45,10 @@
 .upload-box p {
   margin: 0;
   font-size: 1.3rem;
-  color: #7c2d12;
+  color: #e2e8f0;
   font-weight: 600;
   font-family: 'Baloo 2', cursive;
-  text-shadow: 0 1px 2px rgba(124, 45, 18, 0.2);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .uploaded-image-preview {

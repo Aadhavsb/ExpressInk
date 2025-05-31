@@ -77,11 +77,10 @@ const DrawingCanvas = ({ onAnalyze, onResetAnalysis }) => {
   return (
     <div className="drawing-canvas-container">
       {!isDrawingSaved ? (
-        <>
-          <CanvasDraw
+        <>          <CanvasDraw
             ref={canvasRef}
-            canvasWidth={1000}
-            canvasHeight={600}
+            canvasWidth={800}
+            canvasHeight={400}
             brushColor={brushColor}
             brushRadius={brushRadius}
             lazyRadius={0}
