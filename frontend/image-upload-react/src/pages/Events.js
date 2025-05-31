@@ -320,57 +320,58 @@ const Events = () => {
 
     window.URL.revokeObjectURL(url);
   };
-
   return (
     <div className="app-container">
       <div className="events-container">
-        <div className="events-header">
-          <h1 className="events-title">Upcoming Events</h1>
-          <p className="events-description">
-            Discover upcoming events and activities that you and your child can
-            participate in!
+        <div className="events-content">
+          <div className="events-header">
+            <h1 className="events-title">Upcoming Events</h1>
+            <p className="events-description">
+              Discover upcoming events and activities that you and your child can
+              participate in!
+            </p>
+          </div>
+
+          <div className="calendar-container">
+            <Calendar
+              onChange={onChange}
+              value={date}
+              tileClassName={({ date, view }) =>
+                view === "month" && hasEvents(date) ? "highlighted" : null
+              }
+            />
+          </div>
+
+          <p className="selected-date">
+            <span className="bold">Selected Date:</span> {date.toDateString()}
           </p>
-        </div>
 
-        <div className="calendar-container">
-          <Calendar
-            onChange={onChange}
-            value={date}
-            tileClassName={({ date, view }) =>
-              view === "month" && hasEvents(date) ? "highlighted" : null
-            }
-          />
-        </div>
-
-        <p className="selected-date">
-          <span className="bold">Selected Date:</span> {date.toDateString()}
-        </p>
-
-        <div className="events-list">
-          {eventsForSelectedDate.length > 0 ? (
-            <ul>
-              {eventsForSelectedDate.map((event, index) => (
-                <li key={index}>
-                  <strong>{event.title}</strong>
-                  {event.start_time && <span> at {event.start_time}</span>}
-                  {event.location && <span> - {event.location}</span>}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No events scheduled on this day.</p>
-          )}
-        </div>
-        <div className="download-button-container">
-          <button className="download-button" onClick={downloadEventsCSV}>
-            Download All Events as CSV
-          </button>
-          <button
-            className="download-button"
-            onClick={downloadSelectedDateEventsCSV}
-          >
-            Download Events for Selected Date as CSV
-          </button>
+          <div className="events-list">
+            {eventsForSelectedDate.length > 0 ? (
+              <ul>
+                {eventsForSelectedDate.map((event, index) => (
+                  <li key={index}>
+                    <strong>{event.title}</strong>
+                    {event.start_time && <span> at {event.start_time}</span>}
+                    {event.location && <span> - {event.location}</span>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No events scheduled on this day.</p>
+            )}
+          </div>
+          <div className="download-button-container">
+            <button className="download-button" onClick={downloadEventsCSV}>
+              Download All Events as CSV
+            </button>
+            <button
+              className="download-button"
+              onClick={downloadSelectedDateEventsCSV}
+            >
+              Download Events for Selected Date as CSV
+            </button>
+          </div>
         </div>
       </div>
       <Footer />
