@@ -1,30 +1,41 @@
+/* Kid-friendly ImageUpload styles */
 .image-upload-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  font-family: 'Poppins', sans-serif;
 }
 
 .upload-box {
-  border: 2px solid #ccc;
-  border-radius: 8px;
+  border: 3px dashed #a855f7;
+  border-radius: 25px;
   width: 800px;
   height: 400px;
   position: relative;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 50%, #fbbf24 100%);
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
   overflow: hidden;
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2);
+}
+
+.upload-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(168, 85, 247, 0.3);
+  border-color: #7c3aed;
 }
 
 .upload-box.dragging {
-  background-color: #f0f0f0;
+  background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #7c3aed 100%);
+  border-color: #6d28d9;
+  transform: scale(1.02);
 }
 
 .hidden-input {
@@ -33,8 +44,11 @@
 
 .upload-box p {
   margin: 0;
-  font-size: 18px;
-  color: #666;
+  font-size: 1.3rem;
+  color: #7c2d12;
+  font-weight: 600;
+  font-family: 'Baloo 2', cursive;
+  text-shadow: 0 1px 2px rgba(124, 45, 18, 0.2);
 }
 
 .uploaded-image-preview {
@@ -61,21 +75,26 @@
 
 .analyze-button,
 .upload-new-image-button {
-  background-color: #0c96e4;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 1rem 2rem;
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 1.1rem;
   font-weight: 600;
-  width: 200px;
+  font-family: 'Poppins', sans-serif;
+  min-width: 200px;
   text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
 .analyze-button:hover,
 .upload-new-image-button:hover {
-  background-color: #0a7ec1;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
 }
 
 .progress-bar-container {

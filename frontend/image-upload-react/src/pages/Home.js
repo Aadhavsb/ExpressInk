@@ -4,6 +4,7 @@ import ImageAnalysis from "../components/ImageAnalysis";
 import DrawingCanvas from "../components/DrawingCanvas";
 import Footer from "../components/Footer";
 import "../App.css";
+import "./Home.css";
 
 const Home = () => {
   const [aiResponse, setAiResponse] = useState(null);
@@ -69,16 +70,26 @@ const Home = () => {
     }
     return new File([u8arr], filename, { type: mime });
   };
-
   const uploadImage = async (file) => {
     const formData = new FormData();
-    formData.append("image", file);
-
-    try {
+    formData.append("image", file);    try {
       const response = await fetch("http://localhost:8000/upload", {
         method: "POST",
         body: formData,
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Server error:", errorText);
+        throw new Error(`Server responded with ${response.status}: ${errorText}`);
+      }
+
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const errorText = await response.text();
+        console.error("Non-JSON response:", errorText);
+        throw new Error("Server returned non-JSON response");
+      }
 
       const responseData = await response.json();
       if (responseData.aiResponse) {
@@ -90,9 +101,18 @@ const Home = () => {
       console.error("Error uploading drawing:", error);
     }
   };
-
   return (
     <div className="app-container">
+      {/* Floating toy icons */}
+      <div className="floating-toys">
+        <div className="toy-icon teddy">🧸</div>
+        <div className="toy-icon blocks">🧱</div>
+        <div className="toy-icon puzzle">🧩</div>
+        <div className="toy-icon crayon">🖍️</div>
+        <div className="toy-icon star">⭐</div>
+        <div className="toy-icon rainbow">🌈</div>
+      </div>
+
       <header className="heading">
         <h1 className="title">
           ExpressInk - Unleash the Story Behind Every Stroke
@@ -102,12 +122,19 @@ const Home = () => {
           our AI-powered insights!
         </p>
       </header>
+
+      {/* Wave divider */}
+      <div className="wave-divider"></div>
+
       <div className="prompt" onClick={getRandomPrompt}>
         <h2>Suggested Prompt:</h2>
         <p className="prompt-text">{SuggestedPrompt}</p>
       </div>
 
-      <div>
+      {/* Section wave */}
+      <div className="section-wave"></div>
+
+      <div className="upload-drawing-container">
         <h1 className="upload-line">Upload Image or Draw Here</h1>
 
         {!showDrawing ? (
@@ -116,7 +143,7 @@ const Home = () => {
               onFileUpload={handleFileUpload}
               onUploadNewImage={handleUploadNewImage}
             />
-            <p>
+            <p className="mode-switch-text">
               Want to draw live?{" "}
               <button
                 onClick={() => {
@@ -135,7 +162,7 @@ const Home = () => {
               onAnalyze={handleDrawingAnalyze}
               onResetAnalysis={handleResetAnalysis}
             />
-            <p>
+            <p className="mode-switch-text">
               Want to upload an image instead?{" "}
               <button
                 onClick={() => {
@@ -149,9 +176,12 @@ const Home = () => {
             </p>
           </div>
         )}
-
-        <ImageAnalysis aiResponse={aiResponse} />
       </div>
+
+      {/* Analysis wave */}
+      <div className="analysis-wave"></div>
+
+      <ImageAnalysis aiResponse={aiResponse} />
 
       <Footer />
     </div>

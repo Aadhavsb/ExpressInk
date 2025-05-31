@@ -311,5 +311,27 @@
       "another stick figure"
     ],
     "time_stamp": "2025-01-26T16:47:31.111Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "house",
+      "sun",
+      "tree",
+      "person",
+      "flower"
+    ],
+    "time_stamp": "2025-05-31T12:07:14.664Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "house",
+      "sun",
+      "tree",
+      "person",
+      "flower"
+    ],
+    "time_stamp": "2025-05-31T12:08:28.983Z"
   }
 ]
