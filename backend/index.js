@@ -80,9 +80,6 @@ app.post('/upload', optionalAuth, upload.single('image'), async (req, res) => {
     const processingTime = Date.now() - startTime;
 
     if (aiResponse) {
-      // Save to JSON file for backward compatibility
-      saveAnalysisToFile(aiResponse);
-      
       // Save to database if user is authenticated
       if (req.user) {
         try {
@@ -107,8 +104,10 @@ app.post('/upload', optionalAuth, upload.single('image'), async (req, res) => {
           console.log('Analysis saved to database for user:', req.user.username);
         } catch (dbError) {
           console.error('Error saving to database:', dbError);
-          // Continue execution even if database save fails
+          return res.status(500).json({ error: "Error saving analysis to database" });
         }
+      } else {
+        console.log('Analysis not saved - user not authenticated. Please sign up to save your analyses.');
       }
     }
 
@@ -237,29 +236,6 @@ app.get('/prompt-of-the-day', (req, res) => {
   res.json({ prompt: prompt });
 });
 
-// Function to save analysis to file
-function saveAnalysisToFile(aiResponse) {
-  const filePath = path.join(__dirname, 'sentiment_analysis.json');
-
-  // Read the existing file if it exists
-  let analyses = [];
-  if (fs.existsSync(filePath)) {
-    const fileData = fs.readFileSync(filePath);
-    analyses = JSON.parse(fileData);
-  }
-
-  const timestamp = new Date().toISOString();
-  // Push new data into the array
-  const sentimentAnalysis = {
-    sentiment_rating: aiResponse.sentiment_rating.toLowerCase(),
-    detected_objects: aiResponse.detected_objects,
-    time_stamp: timestamp
-  };
-  analyses.push(sentimentAnalysis);
-
-  fs.writeFileSync(filePath, JSON.stringify(analyses, null, 2));
-}
-
 app.get('/json-history', optionalAuth, async (req, res) => {
   try {
     // If user is authenticated, get from database
@@ -278,7 +254,7 @@ app.get('/json-history', optionalAuth, async (req, res) => {
       return res.json(formattedAnalyses);
     }
 
-    // Fallback to file system for non-authenticated users
+    // Fallback to file system for non-authenticated users (optional - could remove this)
     const filePath = path.join(__dirname, 'sentiment_analysis.json');
     
     if (fs.existsSync(filePath)) {
@@ -286,7 +262,7 @@ app.get('/json-history', optionalAuth, async (req, res) => {
       const analyses = JSON.parse(fileData);
       res.json(analyses);
     } else {
-      res.status(404).json({ error: "No analysis history found" });
+      res.status(404).json({ error: "No analysis history found. Please sign up to save your analyses." });
     }
   } catch (error) {
     console.error("Error reading history:", error);
@@ -294,6 +270,70 @@ app.get('/json-history', optionalAuth, async (req, res) => {
   }
 });
 
+// New endpoint for detailed user analytics
+app.get('/api/analytics/summary', auth, async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    // Get recent analyses
+    const recentAnalyses = await Analysis.find({ userId })
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .select('sentimentAnalysis.overallSentiment createdAt analysisType');
+
+    // Get sentiment distribution
+    const sentimentStats = await Analysis.aggregate([
+      { $match: { userId } },
+      {
+        $group: {
+          _id: '$sentimentAnalysis.overallSentiment',
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    // Get timeline data (last 30 days)
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const timelineData = await Analysis.aggregate([
+      { 
+        $match: { 
+          userId,
+          createdAt: { $gte: thirtyDaysAgo }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+            sentiment: '$sentimentAnalysis.overallSentiment'
+          },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { '_id.date': 1 } }
+    ]);
+
+    // Get total counts
+    const totalAnalyses = await Analysis.countDocuments({ userId });
+
+    res.json({
+      totalAnalyses,
+      recentAnalyses,
+      sentimentDistribution: sentimentStats,
+      timelineData,
+      user: {
+        username: req.user.username,
+        memberSince: req.user.createdAt
+      }
+    });
+
+  } catch (error) {
+    console.error('Analytics error:', error);
+    res.status(500).json({ error: 'Error generating analytics' });
+  }
+});
 
 
 // Start the server
