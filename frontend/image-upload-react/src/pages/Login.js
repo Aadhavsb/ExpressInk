@@ -24,12 +24,13 @@ const Login = () => {
       alert("Invalid email or password");
     }
   };
-
   return (
     <div className="login-container">
-      <h2>Login to ExpressInk</h2>
+      <h2>Welcome Back</h2>
+      <p className="login-subtitle">Sign in to your ExpressInk account</p>
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-control">
+          <label htmlFor="email">Email Address</label>
           <input
             type="email"
             id="email"
@@ -42,6 +43,7 @@ const Login = () => {
         </div>
 
         <div className="form-control">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -54,11 +56,11 @@ const Login = () => {
         </div>
 
         <button type="submit" className="login-button">
-          Login
+          Sign In
         </button>
 
         <p className="signup-link">
-          Don't have an account? <a href="/signup">Sign up here</a>
+          Don't have an account? <a href="/signup">Create one here</a>
         </p>
       </form>
     </div>

@@ -1,11 +1,16 @@
 .events-container {
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto 50px;
   padding: 90px 40px 40px;
   font-family: 'Poppins', sans-serif;
   color: #e2e8f0;
   background: linear-gradient(135deg, #1e1b3e 0%, #2d3748 50%, #1a202c 100%);
   min-height: 100vh;
+}
+
+.events-content {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .events-header {
