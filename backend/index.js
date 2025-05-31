@@ -38,7 +38,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/analysis', analysisRoutes);
 
 const openai = new OpenAI({
-  baseURL: "https://api.omnistack.sh/openai/v1", 
   apiKey: process.env.OPENAI_API_KEY,  
 });
 
@@ -70,12 +69,10 @@ app.post('/upload', optionalAuth, upload.single('image'), async (req, res) => {
   const startTime = Date.now();
   
   try {
-    console.log(`Received image upload from backend. File name: ${filename}`);
-
-    // Convert the image to base64 so Omnistack can use it
+    // Convert the image to base64 so OpenAI can use it
     const base64Image = fs.readFileSync(req.file.path).toString('base64');
 
-    // Get the OpenAI response (actually omnistack)
+    // Get the OpenAI response
     const aiResponse = await getOpenAICompletion(base64Image);
     const processingTime = Date.now() - startTime;
 
@@ -101,13 +98,10 @@ app.post('/upload', optionalAuth, upload.single('image'), async (req, res) => {
 
           const analysis = new Analysis(analysisData);
           await analysis.save();
-          console.log('Analysis saved to database for user:', req.user.username);
         } catch (dbError) {
           console.error('Error saving to database:', dbError);
           return res.status(500).json({ error: "Error saving analysis to database" });
         }
-      } else {
-        console.log('Analysis not saved - user not authenticated. Please sign up to save your analyses.');
       }
     }
 
@@ -119,9 +113,7 @@ app.post('/upload', optionalAuth, upload.single('image'), async (req, res) => {
       savedToDatabase: !!req.user
     });
   } catch (error) {
-    console.error("Error during image processing:", error);
-    console.error("Error stack:", error.stack);
-    console.error("Error message:", error.message);
+    console.error("Error during image processing:", error.message);
     res.status(500).json({ error: "Error processing the image with AI.", details: error.message });
   }
 });
@@ -170,7 +162,6 @@ function mapSentimentRating(rating) {
 
 async function getOpenAICompletion(base64String) {
   try {
-    console.log("Making API call to OpenAI/Omnistack...");
     const completion = await openai.chat.completions.create({
       messages: [
         {
@@ -189,27 +180,16 @@ async function getOpenAICompletion(base64String) {
           ]
         }
       ],
-      model: "expressInk4omini",
+      model: "gpt-4o-mini",
       response_format: { type: "json_object" },
       max_tokens: 300
     });
 
-    console.log("Full API Response:", completion);
     const responseContent = JSON.parse(completion.choices[0].message.content);
-    console.log("Parsed Response:", responseContent);
     return responseContent;
   } catch (error) {
-    console.error("Detailed Error in getOpenAICompletion:", JSON.stringify(error, null, 2));
-    console.error("Error message:", error.message);
-    console.error("Error response:", error.response?.data);
-    
-    // For now, return a mock response to test the rest of the application
-    console.log("Returning mock response for testing...");
-    return {
-      sentiment_rating: "positive",
-      reasoning_text: "This appears to be a colorful and expressive drawing with bright elements, suggesting a positive emotional state.",
-      detected_objects: ["house", "sun", "tree", "person", "flower"]
-    };
+    console.error("Error in AI Analysis:", error.message);
+    throw new Error(`AI Analysis failed: ${error.message}`);
   }
 }
 
@@ -254,16 +234,12 @@ app.get('/json-history', optionalAuth, async (req, res) => {
       return res.json(formattedAnalyses);
     }
 
-    // Fallback to file system for non-authenticated users (optional - could remove this)
-    const filePath = path.join(__dirname, 'sentiment_analysis.json');
-    
-    if (fs.existsSync(filePath)) {
-      const fileData = fs.readFileSync(filePath);
-      const analyses = JSON.parse(fileData);
-      res.json(analyses);
-    } else {
-      res.status(404).json({ error: "No analysis history found. Please sign up to save your analyses." });
-    }
+    // For non-authenticated users, return empty array with message
+    res.json({
+      analyses: [],
+      message: "Sign up to save and view your analysis history!",
+      requiresAuth: true
+    });
   } catch (error) {
     console.error("Error reading history:", error);
     res.status(500).json({ error: "Error getting sentiment analysis history", details: error.message });
