@@ -64,8 +64,6 @@
   background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 50%, #6d28d9 100%);
   color: white;
   margin-bottom: 0;
-  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-  padding-bottom: 4rem;
 }
 
 .title {
@@ -112,7 +110,7 @@
   max-width: 1400px;
   margin: 2rem auto;
   padding: 0 1rem;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 /* Prompt section */
@@ -130,6 +128,9 @@
   z-index: 10;
   border: 2px solid #4a5568;
   color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .prompt:hover {
@@ -190,12 +191,15 @@
   border: 2px solid #4a5568;
   position: relative;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Content area for seamless transitions */
 .content-area {
   width: 100%;
-  min-height: 500px;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,6 +208,11 @@
 
 /* Fade animation for prompt text */
 .prompt-text {
+  font-size: 1.1rem;
+  color: #cbd5e0;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
   transition: opacity 0.25s ease;
 }
 
@@ -265,6 +274,14 @@
   line-height: 1.4;
   margin: 0;
   font-style: italic;
+}
+
+.mode-switch-text {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: #cbd5e0;
+  margin: 1.5rem 0 0 0;
+  font-weight: 500;
 }
 
 /* Responsive design */
