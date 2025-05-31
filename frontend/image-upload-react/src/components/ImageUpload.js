@@ -36,7 +36,6 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
       uploadImage(file);
     }
   };
-
   const uploadImage = async (file) => {
     const imageUrl = URL.createObjectURL(file);
     setUploadedImage(imageUrl);
@@ -46,9 +45,34 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
     const formData = new FormData();
     formData.append("image", file);
 
-    try {      const response = await axios.post(
+    // Get JWT token from localStorage
+    const token = localStorage.getItem("token");
+    const headers = {
+      "Content-Type": "multipart/form-data",
+    };
+
+    // Add authorization header if token exists
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    try {
+      setIsAnalyzing(true);
+      setProgress(0);
+
+      const response = await axios.post(
         "http://localhost:8000/upload",
         formData,
+        {
+          headers,
+          onUploadProgress: (progressEvent) => {
+            const percentCompleted = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setProgress(percentCompleted);
+          },
+        }
+      );
         {
           headers: { "Content-Type": "multipart/form-data" },
         }

@@ -36,11 +36,22 @@ const Results = () => {
   useEffect(() => {
     fetchHistory();
   }, []);
-
   const fetchHistory = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:8000/json-history");
+      
+      // Get JWT token from localStorage
+      const token = localStorage.getItem("token");
+      const headers = {};
+
+      // Add authorization header if token exists
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const response = await axios.get("http://localhost:8000/json-history", {
+        headers
+      });
       setHistory(response.data);
       setLoading(false);
     } catch (error) {

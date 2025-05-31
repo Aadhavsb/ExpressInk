@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import "./Header.css";
 
 const Header = () => {
   const navigate = useNavigate();
-
-  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
-  const username = localStorage.getItem("username");
+  const { user, isAuthenticated, logout } = useAuth();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -17,8 +16,7 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("username");
+    logout();
     navigate("/");
     setDropdownOpen(false);
   };
