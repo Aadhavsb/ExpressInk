@@ -9,6 +9,19 @@
   background: linear-gradient(135deg, #1e1b3e 0%, #2d3748 50%, #1a202c 100%);
 }
 
+.error-message {
+  background-color: #fed7d7;
+  color: #c53030;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 4px solid #e53e3e;
+  font-size: 14px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
 .login-container h2 {
   margin-bottom: 30px;
   font-size: 36px;

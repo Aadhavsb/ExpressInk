@@ -4,40 +4,64 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-      (user) => user.email === email && user.password === password
-    );
+    try {
+      const response = await fetch("http://localhost:8000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login,
+          password,
+        }),
+      });
 
-    if (user) {
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("username", user.username || user.email);
+      const data = await response.json();
 
-      navigate("/");
-    } else {
-      alert("Invalid email or password");
+      if (response.ok) {
+        // Store JWT token and user info
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("isAuthenticated", "true");
+
+        navigate("/");
+      } else {
+        setError(data.error || "Login failed");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Network error. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
     <div className="login-container">
       <h2>Welcome Back</h2>
       <p className="login-subtitle">Sign in to your ExpressInk account</p>
+      
+      {error && <div className="error-message">{error}</div>}
+      
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-control">
-          <label htmlFor="email">Email Address</label>
+          <label htmlFor="login">Email or Username</label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="user@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            id="login"
+            name="login"
+            placeholder="email@example.com or username"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
             required
           />
         </div>
@@ -55,8 +79,8 @@ const Login = () => {
           />
         </div>
 
-        <button type="submit" className="login-button">
-          Sign In
+        <button type="submit" className="login-button" disabled={isLoading}>
+          {isLoading ? "Signing In..." : "Sign In"}
         </button>
 
         <p className="signup-link">
