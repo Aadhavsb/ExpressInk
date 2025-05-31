@@ -31,13 +31,17 @@ ChartJS.register(
 );
 
 const Results = () => {
-  const { getAuthHeaders } = useAuth();
+  const { getAuthHeaders, user } = useAuth();
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchHistory();
-  }, []);
+    if (user) {
+      fetchHistory();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
   const fetchHistory = async () => {
     try {
       setLoading(true);
@@ -287,12 +291,30 @@ const Results = () => {
     link.click();
 
     window.URL.revokeObjectURL(url);
-  };
-  if (loading) return (
+  };  if (loading) return (
     <div className="results-container">
       <div className="loading-container">
         <p className="loading-text">Loading your mood trends...</p>
       </div>
+    </div>
+  );
+
+  if (!user) return (
+    <div className="results-container">
+      <div className="login-prompt">
+        <div className="login-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
+        </div>
+        <h1 className="results-title">Login Required</h1>
+        <p className="login-message">Please sign in to view your analysis history and results.</p>
+        <div className="login-buttons">
+          <a href="/login" className="login-button">Sign In</a>
+          <a href="/signup" className="signup-button">Sign Up</a>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 

@@ -96,18 +96,3 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
 }
-
-.progress-bar-container {
-  width: 800px;
-  height: 20px;
-  background-color: #e0e0e0;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-bar {
-  height: 100%;
-  background-color: #0c96e4;
-  width: 0%;
-  transition: width 0.2s ease-in-out;
-}

@@ -2,7 +2,7 @@ const teamData = [
     {
       id: 1,
       name: "Aadhav Bharadwaj",
-      bio: "Back end developer specialized in Node.js",
+      bio: "Full stack developer with expertise in Node.js and React.",
       image: "/images/aadhav.jpeg", // Replace with actual URLs
     },
     {
@@ -20,7 +20,7 @@ const teamData = [
     {
         id: 4,
         name: "Veer Chugh",
-        bio: "Full stack developer, connecting front end and back end.",
+        bio: "Full stack developer with expertise in React and Node.js.",
         image:  "/images/veer.PNG",
       },
   ];

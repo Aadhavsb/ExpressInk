@@ -13,6 +13,7 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
   const [isAnalysisComplete, setIsAnalysisComplete] = useState(false);
   const [progress, setProgress] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -42,13 +43,32 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
     setUploadedImage(imageUrl);
     setIsImageUploaded(true);
     setIsAnalysisComplete(false);
+    setProgress(0);
+
+    // Store the file for later analysis
+    setSelectedFile(file);
+  };
+  const handleAnalyze = async () => {
+    if (!selectedFile) return;
+
+    setIsAnalyzing(true);
+    setIsAnalysisComplete(false);
+    setProgress(0);
 
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("image", selectedFile);
 
     try {
-      setIsAnalyzing(true);
-      setProgress(0);
+      // Simulate progress during upload and analysis
+      const progressInterval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 90) {
+            clearInterval(progressInterval);
+            return prev;
+          }
+          return prev + 10;
+        });
+      }, 200);
 
       const response = await axios.post(
         "http://localhost:8000/upload",
@@ -57,51 +77,38 @@ const ImageUpload = ({ onFileUpload, onUploadNewImage }) => {
           headers: {
             "Content-Type": "multipart/form-data",
             ...getAuthHeaders()
-          },
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            setProgress(percentCompleted);
-          },
+          }
         }
       );
 
+      clearInterval(progressInterval);
+      setProgress(100);
+
       setImageUrl(`http://localhost:8000${response.data.imagePath}`);
 
-      if (onFileUpload) {
-        onFileUpload(response.data);
-      }
+      setTimeout(() => {
+        setIsAnalyzing(false);
+        setIsAnalysisComplete(true);
+        
+        if (onFileUpload) {
+          onFileUpload(response.data);
+        }
+      }, 500);
+
     } catch (err) {
-      console.error("Error uploading image:", err);
+      console.error("Error analyzing image:", err);
+      setIsAnalyzing(false);
+      setProgress(0);
     }
   };
-
-  const handleAnalyze = async () => {
-    setIsAnalyzing(true);
-    setIsAnalysisComplete(false);
-    setProgress(0);
-
-    let fakeProgress = 0;
-    const progressInterval = setInterval(() => {
-      fakeProgress += 5;
-      setProgress(fakeProgress);
-      if (fakeProgress >= 100) {
-        clearInterval(progressInterval);
-        setTimeout(() => {
-          setIsAnalyzing(false);
-          setIsAnalysisComplete(true);
-        }, 500);
-      }
-    }, 200);
-  };
-
   const handleUploadNewImage = () => {
     setUploadedImage(null);
     setIsImageUploaded(false);
     setIsAnalysisComplete(false);
+    setIsAnalyzing(false);
     setProgress(0);
     setImageUrl("");
+    setSelectedFile(null);
 
     if (onUploadNewImage) {
       onUploadNewImage();
