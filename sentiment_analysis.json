@@ -1,0 +1,315 @@
+[
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "flowers",
+      "sunshine",
+      "butterflies",
+      "bench"
+    ],
+    "time_stamp": "2024-01-26T08:00:00.000Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "children",
+      "park",
+      "trees",
+      "ice cream cart"
+    ],
+    "time_stamp": "2024-01-25T16:00:00.000Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "overcast clouds",
+      "coffee cup",
+      "newspaper",
+      "lamp post"
+    ],
+    "time_stamp": "2024-01-25T07:30:00.000Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "city skyline",
+      "coffee shop",
+      "people",
+      "sidewalk"
+    ],
+    "time_stamp": "2024-01-25T18:15:00.000Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "rain",
+      "umbrella",
+      "wet ground",
+      "streetlight"
+    ],
+    "time_stamp": "2024-01-25T06:30:00.000Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "dark clouds",
+      "flooded street",
+      "puddle",
+      "street sign"
+    ],
+    "time_stamp": "2024-01-25T15:45:00.000Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "storm clouds",
+      "lightning",
+      "dark trees",
+      "abandoned bicycle"
+    ],
+    "time_stamp": "2024-01-25T05:50:00.000Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "clear sky",
+      "birds",
+      "garden",
+      "bench"
+    ],
+    "time_stamp": "2024-01-25T17:20:00.000Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "sunset",
+      "lake",
+      "canoe",
+      "campfire"
+    ],
+    "time_stamp": "2024-01-25T07:00:00.000Z"
+  },
+  {
+    "sentiment_rating": "very positive",
+    "detected_objects": [
+      "beach",
+      "waves",
+      "seagulls",
+      "colorful towels"
+    ],
+    "time_stamp": "2024-01-25T15:45:00.000Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "morning light",
+      "flowers",
+      "meadow",
+      "birdsong"
+    ],
+    "time_stamp": "2024-01-25T08:00:00.000Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "picnic",
+      "smiling faces",
+      "green grass",
+      "kite flying"
+    ],
+    "time_stamp": "2024-01-25T17:30:00.000Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "foggy morning",
+      "streetlight",
+      "trolley",
+      "empty street"
+    ],
+    "time_stamp": "2024-01-25T06:00:00.000Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "clouds",
+      "empty playground",
+      "swings",
+      "bare trees"
+    ],
+    "time_stamp": "2024-01-25T15:15:00.000Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "rainbow",
+      "green field",
+      "picnic blanket",
+      "laughing"
+    ],
+    "time_stamp": "2024-01-25T05:50:00.000Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "mountain view",
+      "clear sky",
+      "rock climbing",
+      "cheerful hikers"
+    ],
+    "time_stamp": "2024-01-25T14:50:00.000Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "sad figure",
+      "dark alley",
+      "broken windows",
+      "discarded items"
+    ],
+    "time_stamp": "2024-01-25T06:00:00.000Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "gray clouds",
+      "cold wind",
+      "abandoned house",
+      "cracked sidewalk"
+    ],
+    "time_stamp": "2024-01-25T16:30:00.000Z"
+  },
+  {
+    "sentiment_rating": "very negative",
+    "detected_objects": [
+      "figure",
+      "walls",
+      "floor"
+    ],
+    "time_stamp": "2024-01-25T05:50:00.000Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "dark room",
+      "broken door",
+      "overturned furniture"
+    ],
+    "time_stamp": "2024-01-25T07:00:00.000Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "windy day",
+      "tall grass",
+      "birds",
+      "abandoned cart"
+    ],
+    "time_stamp": "2024-01-25T08:30:00.000Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "cloudy sky",
+      "deserted park",
+      "fountain",
+      "empty bench"
+    ],
+    "time_stamp": "2024-01-25T17:10:00.000Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "family",
+      "picnic",
+      "green field",
+      "balloons"
+    ],
+    "time_stamp": "2024-01-25T07:00:00.000Z"
+  },
+  {
+    "sentiment_rating": "positive",
+    "detected_objects": [
+      "clear sky",
+      "fresh air",
+      "running children",
+      "beach towel"
+    ],
+    "time_stamp": "2024-01-25T14:45:00.000Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "knight",
+      "dragon",
+      "sword",
+      "water",
+      "island",
+      "sun",
+      "waves"
+    ],
+    "time_stamp": "2024-01-25T03:18:42.804Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "stick figure",
+      "stick figure with curly hair",
+      "object resembling a cookie",
+      "object resembling a spaceship"
+    ],
+    "time_stamp": "2024-01-25T03:23:29.478Z"
+  },
+  {
+    "sentiment_rating": "neutral",
+    "detected_objects": [
+      "person",
+      "cricket bat",
+      "cricket gloves",
+      "cricket pads",
+      "t-shirt"
+    ],
+    "time_stamp": "2024-01-25T03:25:02.307Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "stick figure",
+      "heart",
+      "crossed-out symbol",
+      "speech bubbles"
+    ],
+    "time_stamp": "2024-01-25T16:42:26.269Z"
+  },
+  {
+    "sentiment_rating": "very negative",
+    "detected_objects": [
+      "character",
+      "black suit",
+      "red eyes",
+      "spiky hair",
+      "chaotic background"
+    ],
+    "time_stamp": "2025-01-26T16:43:45.967Z"
+  },
+  {
+    "sentiment_rating": "very negative",
+    "detected_objects": [
+      "character",
+      "dark background",
+      "red streaks",
+      "spiky hair"
+    ],
+    "time_stamp": "2025-01-26T16:45:04.894Z"
+  },
+  {
+    "sentiment_rating": "negative",
+    "detected_objects": [
+      "stick figure",
+      "heart",
+      "crossed line",
+      "another stick figure"
+    ],
+    "time_stamp": "2025-01-26T16:47:31.111Z"
+  }
+]
