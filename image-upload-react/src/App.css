@@ -1,0 +1,140 @@
+.body {
+  margin: 0;
+  padding-top: 0;
+  height: 100%;
+}
+
+.app-container {
+  text-align: center;
+  padding: 80px 0 0 0;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  position: relative;
+}
+
+.heading {
+  margin-bottom: 40px;
+  padding: 10px 40px 10px 40px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #666666;
+}
+
+.footer {
+  background-color: #ffffff;
+  padding: 40px 20px;
+  margin-top: 300px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 20px;
+}
+
+.privacy-assurance,
+.feature-highlights {
+  max-width: 400px;
+  min-width: 250px;
+  text-align: left;
+}
+
+.footer h2 {
+  font-size: 24px;
+  color: #0c96e4;
+  margin-bottom: 10px;
+}
+
+.footer p {
+  font-size: 16px;
+  color: #555555;
+  line-height: 1.6;
+}
+
+.footer ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  padding: 0;
+}
+
+.footer li {
+  font-size: 16px;
+  color: #555555;
+  margin-bottom: 5px;
+  line-height: 1.6;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 14px;
+  color: #999999;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .privacy-assurance,
+  .feature-highlights {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .footer ul {
+    list-style-type: none;
+    padding: 0;
+  }
+}
+
+.prompt-text {
+  transition: opacity 0.25s ease-in-out;
+  opacity: 1;
+}
+
+.prompt-text.fade-out {
+  opacity: 0;
+}
+
+.prompt {
+  background-color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.upload-line {
+  padding-top: 40px;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: #0c96e4;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.toggle-button:hover {
+  color: #0a7ec1;
+}
