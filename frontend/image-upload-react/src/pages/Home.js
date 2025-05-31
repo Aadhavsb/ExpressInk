@@ -100,30 +100,8 @@ const Home = () => {
     } catch (error) {
       console.error("Error uploading drawing:", error);
     }
-  };
-  return (
-    <div className="app-container">      {/* Floating toy icons */}
-      <div className="floating-toys">
-        <div className="toy-icon teddy">🧸</div>
-        <div className="toy-icon blocks">🧱</div>
-        <div className="toy-icon puzzle">🧩</div>
-        <div className="toy-icon crayon">🖍️</div>
-        <div className="toy-icon star">⭐</div>
-        <div className="toy-icon rainbow">🌈</div>
-        <div className="toy-icon rocket">🚀</div>
-        <div className="toy-icon ball">⚽</div>
-        <div className="toy-icon book">📚</div>
-        <div className="toy-icon music">🎵</div>
-        <div className="toy-icon heart">💝</div>
-        <div className="toy-icon butterfly">🦋</div>
-        <div className="toy-icon car">🚗</div>
-        <div className="toy-icon plane">✈️</div>
-        <div className="toy-icon sun">☀️</div>
-        <div className="toy-icon flower">🌸</div>
-        <div className="toy-icon castle">🏰</div>
-        <div className="toy-icon boat">⛵</div>
-      </div>
-
+  };  return (
+    <div className="app-container">
       <header className="heading">
         <h1 className="title">
           ExpressInk - Unleash the Story Behind Every Stroke
@@ -132,7 +110,7 @@ const Home = () => {
           Analyze the emotions conveyed in your child's artwork instantly with
           our AI-powered insights!
         </p>
-      </header>      {/* Main content container for side-by-side layout */}
+      </header>{/* Main content container for side-by-side layout */}
       <div className="main-content">        <div className="prompt" onClick={getRandomPrompt}>
           <h2>Suggested Prompt:</h2>
           <p className="prompt-text">{SuggestedPrompt}</p>

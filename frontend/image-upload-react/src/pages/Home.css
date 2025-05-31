@@ -7,53 +7,10 @@
   font-family: 'Poppins', sans-serif;
   position: relative;
   overflow-x: hidden;
+  padding-top: 70px; /* Add space for fixed navbar */
 }
 
-/* Stationary toy icons */
-.floating-toys {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-}
 
-.toy-icon {
-  position: absolute;
-  font-size: 2.5rem;
-  opacity: 0.7;
-  pointer-events: auto;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
-}
-
-.toy-icon:hover {
-  transform: scale(1.2);
-  opacity: 1;
-}
-
-/* Stationary positions - spread farther apart */
-.toy-icon.teddy { top: 8%; left: 3%; }
-.toy-icon.blocks { top: 12%; right: 4%; }
-.toy-icon.puzzle { top: 65%; left: 2%; }
-.toy-icon.crayon { top: 75%; right: 3%; }
-.toy-icon.star { top: 35%; left: 1%; }
-.toy-icon.rainbow { top: 20%; right: 15%; }
-.toy-icon.rocket { top: 45%; left: 4%; }
-.toy-icon.ball { top: 55%; right: 6%; }
-.toy-icon.book { top: 85%; left: 8%; }
-.toy-icon.music { top: 30%; right: 2%; }
-.toy-icon.heart { top: 50%; left: 7%; }
-.toy-icon.butterfly { top: 18%; left: 15%; }
-.toy-icon.car { top: 40%; right: 12%; }
-.toy-icon.plane { top: 28%; left: 18%; }
-.toy-icon.sun { top: 5%; left: 25%; }
-.toy-icon.flower { top: 90%; right: 8%; }
-.toy-icon.castle { top: 60%; right: 10%; }
-.toy-icon.boat { top: 80%; left: 12%; }
 
 /* Header section */
 .heading {

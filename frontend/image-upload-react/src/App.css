@@ -2,31 +2,38 @@
   margin: 0;
   padding-top: 0;
   height: 100%;
+  font-family: 'Poppins', sans-serif;
 }
 
 .app-container {
   text-align: center;
-  padding: 80px 0 0 0;
-  background-color: #f4f4f4;
+  padding: 0;
+  background: linear-gradient(135deg, #1e1b3e 0%, #2d3748 50%, #1a202c 100%);
   min-height: 100vh;
   position: relative;
 }
 
 .heading {
   margin-bottom: 40px;
-  padding: 10px 40px 10px 40px;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 50%, #6d28d9 100%);
+  color: white;
 }
 
 .title {
-  font-size: 36px;
-  font-weight: bold;
-  color: #333333;
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #ffffff;
   margin-bottom: 10px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .subtitle {
-  font-size: 18px;
-  color: #666666;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: #e2e8f0;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
 }
 
 .footer {
