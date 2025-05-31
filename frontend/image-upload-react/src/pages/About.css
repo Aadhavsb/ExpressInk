@@ -83,9 +83,7 @@
   }
 }
 
-body {
-  background-color: #f4f4f4;
-}
+/* Removed old body background - using component-specific backgrounds */
 
 .connect-section {
   max-width: 1200px;

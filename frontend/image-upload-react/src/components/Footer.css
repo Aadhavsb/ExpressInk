@@ -75,9 +75,11 @@
 }
 
 a {
-  color: #8b5cf6;
+  color: #a855f7;
   transition: color 0.3s ease;
+  text-decoration: none;
 }
 a:hover {
-  color: #a855f7;
+  color: #c084fc;
+  text-decoration: underline;
 }

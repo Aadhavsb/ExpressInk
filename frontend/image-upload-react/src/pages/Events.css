@@ -43,7 +43,7 @@
 }
 
 .calendar-container .react-calendar__navigation button {
-  color: #0c96e4;
+  color: #ffffff;
   font-weight: bold;
   font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
     sans-serif;
@@ -57,7 +57,7 @@
   font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
     sans-serif;
   font-size: 16px;
-  color: #333333;
+  color: #a855f7;
 }
 
 .calendar-container .react-calendar__month-view__weekdays__weekday {
@@ -65,7 +65,7 @@
 }
 
 .calendar-container .react-calendar__month-view__days__day--weekend {
-  color: #333333;
+  color: #e2e8f0;
 }
 
 .calendar-container .react-calendar__tile {
@@ -74,28 +74,30 @@
   border-radius: 4px;
   font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
     sans-serif;
+  color: #e2e8f0;
 }
 
 .calendar-container .react-calendar__tile:enabled:hover,
 .calendar-container .react-calendar__tile:enabled:focus {
-  background-color: #e6f4ff;
+  background-color: rgba(168, 85, 247, 0.2);
 }
 
 .calendar-container .react-calendar__tile--active {
-  background-color: #0c96e4;
+  background-color: #a855f7;
   color: white;
 }
 
 .calendar-container .react-calendar__tile--now {
-  background-color: #f0f0f0;
+  background-color: #4a5568;
+  color: #e2e8f0;
 }
 
 .calendar-container .highlighted {
-  background-color: #e6f4ff;
+  background-color: rgba(168, 85, 247, 0.3);
 }
 
 .calendar-container .react-calendar__tile--active:hover {
-  background-color: #0a7ec1;
+  background-color: #9333ea;
 }
 
 .selected-date {
@@ -104,11 +106,12 @@
   text-align: center;
   font-family: "Poppins", "Quicksand", "Nunito", "Segoe UI", "Roboto",
     sans-serif;
+  color: #e2e8f0;
 }
 
 .selected-date .bold {
   font-weight: bold;
-  color: #0c96e4;
+  color: #a855f7;
 }
 
 .events-list {
@@ -121,33 +124,38 @@
 }
 
 .events-list li {
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
   margin-bottom: 15px;
   padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid #4a5568;
+  transition: all 0.3s ease;
 }
 
 .events-list li strong {
   font-size: 18px;
-  color: #0c96e4;
+  color: #a855f7;
 }
 
 .events-list li span {
   display: block;
   font-size: 16px;
-  color: #555555;
+  color: #cbd5e0;
   margin-top: 5px;
 }
 
 .events-list li:hover {
-  background-color: #e6f4ff;
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.2);
+  border-color: #a855f7;
   cursor: pointer;
 }
 
 .events-list p {
   font-size: 16px;
-  color: #666666;
+  color: #cbd5e0;
   text-align: center;
 }
 
@@ -187,22 +195,26 @@
 }
 
 .download-button {
-  background-color: #0c96e4;
+  background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
   color: #ffffff;
   padding: 12px 24px;
   font-size: 16px;
   font-weight: bold;
   border: none;
-  border-radius: 8px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 10px; /* Adds spacing between buttons */
+  transition: all 0.3s ease;
+  margin: 10px;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
 }
 
 .download-button:hover {
-  background-color: #0a7ec1;
+  background: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
 }
 
 .download-button:active {
-  background-color: #075a8c;
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  transform: translateY(0);
 }
