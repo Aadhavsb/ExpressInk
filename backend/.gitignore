@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+
+# macOS
+.DS_Store
+
+# IDEs
+.vscode/
+
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*.local
+
+# Temporary files
+*.swp
+*~
+*.bak
+*.tmp
+
+# Image files
+uploads/
